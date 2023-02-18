@@ -10,6 +10,7 @@ import cookieParser from 'cookie-parser';
 
 import authRoutes from './routes/auth.routes.js';
 import reviewRoutes from './routes/review.routes.js';
+import userRoutes from './routes/user.routes.js';
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -29,6 +30,7 @@ app.use(cors());
 app.use(cookieParser())
 app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
+app.use('/api', userRoutes);
 app.use('/api', reviewRoutes);
 app.use('/api/auth', authRoutes);
 

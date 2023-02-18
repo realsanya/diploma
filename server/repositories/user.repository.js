@@ -98,6 +98,32 @@ class UserRepository {
       res.status(500).send({ message: "Что-то пошло не так" });
     }
   };
+
+  async getUsers() {
+    try {
+      const users = await this.db.users.findAll();
+      console.log('users:::', users);
+      return users;
+    } catch (err) {
+      logger.error(err);
+      return [];
+    }
+  }
+
+  async getUserById(userId) {
+    try {
+      console.log(userId);
+      const user = await this.db.users.findOne({
+        where: {
+          id: userId
+        }
+      });
+
+      return user;
+    } catch (err) {
+      return null;
+    }
+  }
 }
  
 export default UserRepository;
