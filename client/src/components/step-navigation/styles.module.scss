@@ -1,0 +1,36 @@
+.step_navigation {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+
+  &__item {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 24px;
+    color: #075FF7;
+    box-sizing: border-box;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background-color: transparent;
+    text-decoration: none;
+    transition: background-color 400ms, color 200ms;
+
+    &:hover:not(&--disabled):not(&--active) {
+      background-color: #F2F4F7;
+      color: #075FF7;
+    }
+
+    &--active:not(&--disabled) {
+      background-color: #005EFF;
+      // color: #fff;
+      cursor: pointer;
+    }
+
+    &--disabled {
+      cursor: default;
+      color: #636975;
+      opacity: .6;
+    }
+  }
+}

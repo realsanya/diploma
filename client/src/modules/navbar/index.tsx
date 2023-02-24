@@ -23,7 +23,7 @@ import {
   Menu,
   Close,
 } from '@mui/icons-material';
-import FlexBetween from 'components/FlexBetween';
+import FlexBetween from 'components/flex-between';
 
 import { MIN_SCREEN_WIDTH } from 'modules/constants';
 

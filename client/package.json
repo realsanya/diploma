@@ -54,6 +54,7 @@
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.2",
-    "aws-sdk": "^2.1317.0"
+    "aws-sdk": "^2.1317.0",
+    "sass": "^1.58.3"
   }
 }

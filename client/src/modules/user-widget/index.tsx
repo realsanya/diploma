@@ -9,9 +9,9 @@ import {
   WorkOutlineOutlined,
 } from '@mui/icons-material';
 import { Box, Typography, Divider, useTheme } from '@mui/material';
-import UserImage from 'components/UserImage';
-import FlexBetween from 'components/FlexBetween';
-import WidgetWrapper from 'components/WidgetWrapper';
+import UserImage from 'components/user-image';
+import FlexBetween from 'components/flex-between';
+import WidgetWrapper from 'components/widget-wrapper';
 import API from 'api';
 
 type TUserWidget = {

@@ -14,12 +14,11 @@ import {
   useTheme
 } from '@mui/material';
 import { EditOutlined } from '@mui/icons-material';
-import FlexBetween from 'components/FlexBetween';
+import FlexBetween from 'components/flex-between';
 
 import { Formik, FormikProps, FormValues } from 'formik';
 import * as yup from 'yup';
 import { setLogin } from 'state';
-import { response } from 'express';
 
 const REQUIRED = 'Обязательное поле';
 

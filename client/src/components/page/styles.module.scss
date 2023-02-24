@@ -1,0 +1,60 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 0 80px;
+
+  &_header, &_footer, &_body {
+    box-sizing: border-box;
+    flex-shrink: 0;
+  }
+
+  &_header {
+    padding: 32px 0;
+
+    &__title {
+      font-size: 32px;
+      line-height: 40px;
+      margin: 0;
+      color: #0C1524;
+    }
+
+    &__subtitle {
+      font-size: 16px;
+      line-height: 24px;
+      margin: 16px 0 0 0;
+    }
+  }
+
+  &_body {
+    padding-bottom: 64px;
+    flex: 1;
+
+    &__section {
+      font-size: 1rem;
+      font-weight: 400;
+      margin: 40px 0 0;
+      padding-bottom: 40px;
+      border-bottom: 1px solid #DCE2EB;
+      display: flex;
+      gap: 24px;
+      flex-direction: column;
+
+      &_title {
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 30px;
+        color: #0C1524;
+        margin: 0;
+      }
+    }
+  }
+
+  &_footer {
+    flex-shrink: 0;
+    padding-bottom: 80px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,18 @@
+.toolbar {
+  display: inline-grid;
+  grid-auto-flow: column;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 24px 40px;
+  background-color: #f2f4f7;
+  border-radius: 16px;
+
+  & > :last-child {
+    justify-self: flex-end;
+  }
+
+  & > :first-child {
+    justify-self: flex-start;
+  }
+}

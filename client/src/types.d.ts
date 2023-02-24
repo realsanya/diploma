@@ -15,3 +15,17 @@ type TUser = {
 type TReview = {
   id: number;
 }
+
+type TRouteItemConfig = {
+  title?: string;
+  path?: string;
+  href?: string;
+  isPrivate?: boolean;
+  roleAccess?: EUserProfileRole[]
+  exact?: boolean;
+  index?: boolean;
+  component: ComponentType;
+  children?: Record<string, TRouteItemConfig>;
+  redirect?: string;
+  isNativeLink?: boolean,
+};
