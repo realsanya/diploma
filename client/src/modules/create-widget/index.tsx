@@ -8,7 +8,7 @@ const CreateWidget = () => {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const createReview = useCallback(() => navigate({ pathname: `/review/create` }), [navigate]);
+  const createReview = useCallback(() => navigate({ pathname: `/review/create/general-info` }), [navigate]);
 
   return (
     <WidgetWrapper>

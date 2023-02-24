@@ -26,8 +26,6 @@ const StepNavigation: FC<TStepNavigationProps> = ({ links, state }) => {
         ? last === 'create' || last === 'update'
         : last === link.href;
 
-      console.log(isActive);
-
       return (
         <NavLink 
           key={link.title}
@@ -39,8 +37,8 @@ const StepNavigation: FC<TStepNavigationProps> = ({ links, state }) => {
             ${isActive ? styles['step_navigation__item--active'] : ''}
           `}
           style={{
-            backgroundColor: !link.disabled && !isActive ? theme.palette.primary.main : 'inherit',
-            color: !link.disabled && !isActive ? theme.palette.background.alt : '#636975',
+            backgroundColor: !link.disabled && isActive ? theme.palette.primary.main : 'inherit',
+            color: !link.disabled && isActive ? theme.palette.background.alt : '#636975',
           }}>
           {link.title}
         </NavLink>

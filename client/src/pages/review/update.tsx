@@ -19,9 +19,9 @@ const ReviewUpdateForm = () => {
         <StepNavigation 
           links={[
             { title: 'Общее', href: 'general-info', disabled: false },
-            { title: 'Анализ рукописи', href: '', disabled: false },
-            { title: 'Составление текста', href: '', disabled: true },
-            { title: 'Валидация', href: '', disabled: true },
+            { title: 'Анализ рукописи', href: 'analysis', disabled: false },
+            { title: 'Составление текста', href: 'drafting', disabled: false },
+            { title: 'Валидация', href: 'validation', disabled: false },
           ]}
           state={{}}
         />

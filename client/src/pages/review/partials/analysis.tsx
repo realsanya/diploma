@@ -1,10 +1,10 @@
 import { Formik } from 'formik';
 
-const GeneralInfo = () => {
+const Analysis = () => {
 
   return (
     <div>
-      GeneralInfo
+      Analysis
     </div>
   )
 
@@ -20,4 +20,4 @@ const GeneralInfo = () => {
   // )
 };
 
-export default GeneralInfo;
+export default Analysis;

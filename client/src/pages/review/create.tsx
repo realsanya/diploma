@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 import { Button, useTheme } from '@mui/material';
 import Page from 'components/page';
@@ -9,9 +9,11 @@ import Toolbar from 'components/toolbar';
 const ReviewCreateForm = () => {
 
   const theme = useTheme();
+  // const navigate = useNavigate();
 
   const handleSubmit = useCallback(() => {
-
+    // console.log(data);
+    // navigate(`/review/update/${id}/analysis`);
   }, []);
 
   return (
@@ -21,7 +23,7 @@ const ReviewCreateForm = () => {
         <StepNavigation 
           links={[
             { title: 'Общее', href: 'general-info', disabled: false },
-            { title: 'Анализ рукописи', href: '', disabled: false },
+            { title: 'Анализ рукописи', href: '', disabled: true },
             { title: 'Составление текста', href: '', disabled: true },
             { title: 'Валидация', href: '', disabled: true },
           ]}
