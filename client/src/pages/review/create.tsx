@@ -1,7 +1,8 @@
 import { useCallback } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-
 import { Button, useTheme } from '@mui/material';
+
+import API from 'api';
 import Page from 'components/page';
 import StepNavigation from 'components/step-navigation';
 import Toolbar from 'components/toolbar';
@@ -9,12 +10,30 @@ import Toolbar from 'components/toolbar';
 const ReviewCreateForm = () => {
 
   const theme = useTheme();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  const handleSubmit = useCallback(() => {
-    // console.log(data);
-    // navigate(`/review/update/${id}/analysis`);
-  }, []);
+  const handleSubmit = useCallback(async () => {
+    try {
+      const response = await fetch(API.REVIEW, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: 'NEW REVIEW '}),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message);
+      } else {
+        const { id } = result;
+
+        if (id) navigate(`/review/update/${id}/analysis`);
+        console.log(result);
+      }
+    } catch (error) {
+      // setError(error.message || 'Что-то пошло не так');
+    }
+  }, [navigate]);
 
   return (
     <Page>

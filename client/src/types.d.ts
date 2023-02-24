@@ -14,7 +14,10 @@ type TUser = {
 
 type TReview = {
   id: number;
-}
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+};
 
 type TRouteItemConfig = {
   title?: string;

@@ -1,6 +1,8 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
+import moment from 'moment';
+import 'moment/locale/ru' 
 
 import HomePage from 'pages/home';
 import LoginPage from 'pages/login';
@@ -18,6 +20,8 @@ import GeneralInfo from 'pages/review/partials/general-info';
 import Analysis from 'pages/review/partials/analysis';
 import Drafting from 'pages/review/partials/drafting';
 import Validation from 'pages/review/partials/validation';
+
+moment.locale('ru')
 
 function App() {
   const mode = useSelector((state: TState) => state.mode);

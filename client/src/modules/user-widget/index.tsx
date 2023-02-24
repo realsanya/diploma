@@ -54,7 +54,6 @@ const UserWidget = ({ userId, picturePath }: TUserWidget) => {
     <WidgetWrapper>
       <FlexBetween
         gap="0.5rem"
-        pb="1.1rem"
         flexDirection="column"
         onClick={() => navigate(`profile/${userId}`)}
       >
@@ -86,7 +85,7 @@ const UserWidget = ({ userId, picturePath }: TUserWidget) => {
 
         <Divider style={{ width:'100%' }} />
 
-        <Box p="1rem 0" width="100%" display="flex" alignItems="flex-start" flexDirection="column">
+        <Box pt="1rem" width="100%" display="flex" alignItems="flex-start" flexDirection="column">
           <Box display="flex" alignItems="center" gap="1rem" mb="0.5rem">
             <LocationOnOutlined fontSize="large" sx={{ color: main }} />
             <Typography color={medium}>Здесь должны быть данные</Typography>
