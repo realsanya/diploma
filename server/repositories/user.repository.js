@@ -18,7 +18,7 @@ class UserRepository {
   
   async signup(req, res) {
     try {
-      const { firstName, email, lastName, password } = req.body;
+      const { firstName, email, lastName, password, pictureStorageName } = req.body;
 
       const user = await this.db.users.findOne({
         where: {
@@ -35,6 +35,7 @@ class UserRepository {
         lastName,
         email,
         password: await bcrypt.hash(password, 10),
+        pictureStorageName,
       };
 
       const createdUser = await this.db.users.create(data);
@@ -81,8 +82,7 @@ class UserRepository {
    
 
           res.cookie("token", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true });
-          console.log("user", JSON.stringify(user, null, 2));
-          console.log(token);
+
           return res.status(201).send({
             user,
             token,

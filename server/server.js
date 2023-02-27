@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import fileUpload from 'express-fileupload';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
@@ -11,13 +12,12 @@ import cookieParser from 'cookie-parser';
 import authRoutes from './routes/auth.routes.js';
 import reviewRoutes from './routes/review.routes.js';
 import userRoutes from './routes/user.routes.js';
+import storageRoutes from './routes/storage.routes.js';
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
-console.log('HOST', process.env.HOST);
-
 
 const app = express();
 app.use(express.json());
@@ -28,11 +28,15 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
 app.use(cookieParser())
+app.use(fileUpload());
 app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
 app.use('/api', userRoutes);
 app.use('/api', reviewRoutes);
 app.use('/api/auth', authRoutes);
+app.use(storageRoutes);
+
+//TODO: add auth middleware
 
 app.use((_, res) => {
   res.status(404).send("Sorry can't find that!")

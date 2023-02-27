@@ -21,7 +21,7 @@ export default (sequelize, DataTypes, Model) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    picture: {
+    pictureStorageName: {
       type: DataTypes.STRING,
       allowNull: true
     },

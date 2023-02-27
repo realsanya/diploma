@@ -13,7 +13,7 @@ const UserImage = ({ image, size = "60px" }: TUserImage) => {
         width={size}
         height={size}
         alt="user"
-        src={image || 'https://www.tutorialspoint.com/assets/questions/media/426142-1668760872.png'}
+        src={image ? `data:image/jpeg;base64, ${image}` : 'https://www.tutorialspoint.com/assets/questions/media/426142-1668760872.png'}
       />
     </Box>
   );

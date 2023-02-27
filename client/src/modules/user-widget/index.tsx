@@ -1,10 +1,10 @@
+// @ts-nocheck
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import {
   ManageAccountsOutlined,
-  EditOutlined,
   LocationOnOutlined,
   WorkOutlineOutlined,
 } from '@mui/icons-material';
@@ -16,11 +16,11 @@ import API from 'api';
 
 type TUserWidget = {
   userId: number,
-  picturePath: string,
 };
 
-const UserWidget = ({ userId, picturePath }: TUserWidget) => {
+const UserWidget = ({ userId }: TUserWidget) => {
   const [user, setUser] = useState(null);
+  const [image, setImage] = useState(null);
   const { palette } = useTheme();
   const navigate = useNavigate();
   const token = useSelector((state: any) => state.token);
@@ -29,13 +29,28 @@ const UserWidget = ({ userId, picturePath }: TUserWidget) => {
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
 
+  //TODO: добавить обработчик ошибок
   const getUser = async () => {
-    const response = await fetch(`${API.USERS}/${userId}`, {
-      method: 'GET',
-      headers: { Authorization: `Bearer ${token}`}
-    });
-    const data = await response.json();
-    setUser(data);
+    try {
+      const response = await fetch(`${API.USERS}/${userId}`, {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${token}`}
+      });
+      const data = await response.json();
+  
+      if (data.pictureStorageName) {
+        const imageResponse = await fetch(`${API.MEDIA}/${data.pictureStorageName}`, {
+          method: 'GET',
+          headers: { Authorization: `Bearer ${token}`}
+        });
+    
+        const dataImg = await imageResponse.text();
+        setImage(dataImg);
+      }
+      setUser(data);
+    } catch (err) {
+      //TODO; разлогинить
+    }
   };
 
   useEffect(() => {
@@ -59,7 +74,7 @@ const UserWidget = ({ userId, picturePath }: TUserWidget) => {
       >
         <FlexBetween width="100%" gap="1rem" flexDirection="row" justifyContent="space-between">
           <FlexBetween>
-            <UserImage image={picturePath} />
+            <UserImage image={image} />
             <Box display="flex" justifyContent="space-between" flexDirection="column">
               <Typography
                 variant='h4'

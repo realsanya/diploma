@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import { EditOutlined } from '@mui/icons-material';
 import FlexBetween from 'components/flex-between';
+// import useYandexStorage from 'utils/useYandexStorage';
 
 import { Formik, FormikProps, FormValues } from 'formik';
 import * as yup from 'yup';
@@ -131,146 +132,170 @@ const Form = () => {
         handleChange,
         setFieldValue,
         resetForm,
-       }: FormikProps<FormValues>) => (
-        <form onSubmit={handleSubmit}>
-          <Box
-            display="grid"
-            gap="30px"
-            gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-            sx={{
-              '& > div': {
-                gridColumn: isNonMobile ? undefined : 'span 4',
-              }
-            }}
-          >
-            {isRegister && (
-              <>
-                <TextField
-                  name="firstName"
-                  label="Имя"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.firstName}
-                  error={!!touched.firstName && !!errors.firstName}
-                  helperText={touched.firstName && errors.firstName}
-                  sx={{ gridColumn: 'span 2' }}
-                />
-                <TextField
-                  name="lastName"
-                  label="Фамилия"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.lastName}
-                  error={!!touched.lastName && !!errors.lastName}
-                  helperText={touched.lastName && errors.firstName}
-                  sx={{ gridColumn: 'span 2' }}
-                />
-                <Box
-                  gridColumn="span 4"
-                  border={`1px solid ${theme.palette.neutral.medium}`}
-                  borderRadius="5px"
-                  p="1rem"
-                >
-                  <Dropzone
-                    acceptedFiles=".jpg,.jpeg,.png"
-                    multiple={false}
-                    onDrop={(acceptedFiles) => 
-                      setFieldValue('picture', acceptedFiles[0])
-                    }
+       }: FormikProps<FormValues>) => {
+
+        const handleUploadFile = async (acceptedFiles) => {
+          let formData = new FormData();
+          formData.append('file', acceptedFiles[0]);
+
+          try {
+            const response = await fetch(API.MEDIA, {
+              method: 'POST',
+              body: formData,
+            });
+
+            if (!response.ok) {
+              throw new Error(result.message);
+            } else {
+              const data = await response.json();
+
+              setFieldValue('picture', acceptedFiles[0]);
+              setFieldValue('pictureStorageName', data.key.split('/')[1]);
+            }
+          } catch (err) {
+            setError(error.message || 'Что-то пошло не так');
+          }
+        };
+
+        return(
+          <form onSubmit={handleSubmit}>
+            <Box
+              display="grid"
+              gap="30px"
+              gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+              sx={{
+                '& > div': {
+                  gridColumn: isNonMobile ? undefined : 'span 4',
+                }
+              }}
+            >
+              {isRegister && (
+                <>
+                  <TextField
+                    name="firstName"
+                    label="Имя"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.firstName}
+                    error={!!touched.firstName && !!errors.firstName}
+                    helperText={touched.firstName && errors.firstName}
+                    sx={{ gridColumn: 'span 2' }}
+                  />
+                  <TextField
+                    name="lastName"
+                    label="Фамилия"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.lastName}
+                    error={!!touched.lastName && !!errors.lastName}
+                    helperText={touched.lastName && errors.firstName}
+                    sx={{ gridColumn: 'span 2' }}
+                  />
+                  <Box
+                    gridColumn="span 4"
+                    border={`1px solid ${theme.palette.neutral.medium}`}
+                    borderRadius="5px"
+                    p="1rem"
                   >
-                    {({ getRootProps, getInputProps }) => (
-                      <Box
-                        {...getRootProps()}
-                        border={`2px dashed ${theme.palette.primary.main}`}
-                        p="1rem"
-                        sx={{ '&:hover': { cursor: 'pointer' }}}
-                      >
-                        <input {...getInputProps()} />
-                        {!values.picture ? (
-                          <p>Добавить фотографию</p>
-                        ) : (
-                          <FlexBetween>
-                            <Typography>{values.picture.name}</Typography>
-                            <EditOutlined />
-                          </FlexBetween>
-                        )}
-                      </Box>
-                    )}
-                  </Dropzone>
-                </Box>
-              </>
-            )}
+                    <Dropzone
+                      acceptedFiles=".jpg,.jpeg,.png"
+                      multiple={false}
+                      onDrop={handleUploadFile}
+                    >
+                      {({ getRootProps, getInputProps }) => (
+                        <Box
+                          {...getRootProps()}
+                          border={`2px dashed ${theme.palette.primary.main}`}
+                          p="1rem"
+                          sx={{ '&:hover': { cursor: 'pointer' }}}
+                        >
+                          <input {...getInputProps()} />
+                          {!values.picture ? (
+                            <p>Добавить фотографию</p>
+                          ) : (
+                            <FlexBetween>
+                              <Typography>{values.picture.name}</Typography>
+                              <EditOutlined />
+                            </FlexBetween>
+                          )}
+                        </Box>
+                      )}
+                    </Dropzone>
+                  </Box>
+                </>
+              )}
 
-            <TextField
-              name="email"
-              label="Почта"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.email}
-              error={!!touched.email && !!errors.email}
-              helperText={touched.email && errors.email}
-              sx={{ gridColumn: 'span 4' }}
-              autoComplete='nope'
-            />
-            <TextField
-              name="password"
-              type="password"
-              inputProps={{
-                autoComplete: 'new-password',
-                form: {
-                  autoComplete: 'off',
-                },
-              }}
-              label="Пароль"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.password}
-              error={!!touched.password && !!errors.password}
-              helperText={touched.password && errors.password}
-              sx={{ gridColumn: 'span 4' }}
-            />
-            {error && (
-              <Typography sx={{ color: 'red', gridColumn: 'span 4', textAlign: 'left' }}>{error}</Typography>
-            )}
-          </Box>
+              <TextField
+                name="email"
+                label="Почта"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.email}
+                error={!!touched.email && !!errors.email}
+                helperText={touched.email && errors.email}
+                sx={{ gridColumn: 'span 4' }}
+                autoComplete='nope'
+              />
+              <TextField
+                name="password"
+                type="password"
+                inputProps={{
+                  autoComplete: 'new-password',
+                  form: {
+                    autoComplete: 'off',
+                  },
+                }}
+                label="Пароль"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.password}
+                error={!!touched.password && !!errors.password}
+                helperText={touched.password && errors.password}
+                sx={{ gridColumn: 'span 4' }}
+              />
+              {error && (
+                <Typography sx={{ color: 'red', gridColumn: 'span 4', textAlign: 'left' }}>{error}</Typography>
+              )}
+            </Box>
 
-          {/* BUTTONS */}
-          <Box>
-            <Button
-              fullWidth
-              type="submit"
-              sx={{
-                m: '2rem 0',
-                p: '1rem',
-                backgroundColor: theme.palette.primary.main,
-                color: theme.palette.background.alt,
-                '&:hover': {
+            {/* BUTTONS */}
+            <Box>
+              <Button
+                fullWidth
+                type="submit"
+                sx={{
+                  m: '2rem 0',
+                  p: '1rem',
+                  backgroundColor: theme.palette.primary.main,
+                  color: theme.palette.background.alt,
+                  '&:hover': {
+                    color: theme.palette.primary.main,
+                  }
+                }}
+              >
+              {isLogin ? 'Войти' : 'Зарегистрироваться'}
+              </Button>
+              <Typography
+                onClick={() => {
+                  setMode(isLogin ? 'register' : 'login');
+                  resetForm();
+                }}
+                sx={{
+                  textDecoration: 'underline',
                   color: theme.palette.primary.main,
-                }
-              }}
-            >
-            {isLogin ? 'Войти' : 'Зарегистрироваться'}
-            </Button>
-            <Typography
-              onClick={() => {
-                setMode(isLogin ? 'register' : 'login');
-                resetForm();
-              }}
-              sx={{
-                textDecoration: 'underline',
-                color: theme.palette.primary.main,
-                '&:hover': {
-                  cursor: 'pointer',
-                  color: theme.palette.primary.light,
-                }
-              }}
-            >
-              {isLogin ? 'Нет аккаунта? Зарегистрируйтесь здесь.' : 'Уже есть аккаунт? Авторизируйтесь здесь.'}
-            </Typography>
-          </Box>
+                  '&:hover': {
+                    cursor: 'pointer',
+                    color: theme.palette.primary.light,
+                  }
+                }}
+              >
+                {isLogin ? 'Нет аккаунта? Зарегистрируйтесь здесь.' : 'Уже есть аккаунт? Авторизируйтесь здесь.'}
+              </Typography>
+            </Box>
 
-        </form>
-      )}
+          </form>
+        )}
+      }
     </Formik>
   );
 };

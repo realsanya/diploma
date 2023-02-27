@@ -10,7 +10,7 @@ import ReviewWidget from 'modules/review-widget';
 
 const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
-  const { id, picturePath } = useSelector((state: any) => state.user);
+  const { id } = useSelector((state: any) => state.user);
   const [reviews, setReviews] = useState<Array<TReview>>([]);
 
   //TODO: вынести в хук
@@ -50,7 +50,7 @@ const HomePage = () => {
         justifyContent="space-between"
       >
         <Box flexBasis={isNonMobileScreens ? '26%' : undefined}>
-          <UserWidget userId={id} picturePath={picturePath} />
+          <UserWidget userId={id} />
         </Box>
         {!isNonMobileScreens && <Box flexBasis='26%' padding="2rem 0"><CreateWidget /></Box>}
         <Box
