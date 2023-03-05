@@ -3,62 +3,61 @@ import { logger } from '../logger/index.js';
 
 class ReviewRepository {
 
-    db = {};
+  db = {};
 
-    constructor() {
-        this.db = connect();
+  constructor() {
+    this.db = connect();
+  }
+
+  async getAll() {
+    try {
+      const reviews = await this.db.reviews.findAll();
+      return reviews;
+    } catch (err) {
+      logger.error('Error::' + err);
+      return [];
     }
+  }
 
-    async getAll() {
-        try {
-            const reviews = await this.db.reviews.findAll();
-            return reviews;
-        } catch (err) {
-            logger.error('Error::' + err);
-            return [];
+  async create(review) {
+    let data = {};
+    try {
+      review.createdate = new Date().toISOString();
+      data = await this.db.reviews.create(review);
+    } catch(err) {
+      logger.error('Error::' + err);
+    }
+    return data;
+  }
+
+  async update(review) {
+    let data = {};
+    try {
+      review.updateddate = new Date().toISOString();
+      data = await this.db.reviews.update({...review}, {
+        where: {
+          id: review.id
         }
+      });
+    } catch(err) {
+      logger.error('Error::' + err);
     }
+    return data;
+  }
 
-    async create(review) {
-        let data = {};
-        try {
-            review.createdate = new Date().toISOString();
-            data = await this.db.reviews.create(review);
-        } catch(err) {
-            logger.error('Error::' + err);
+  async delete(reviewId) {
+    let data = {};
+    try {
+      data = await this.db.reviews.destroy({
+        where: {
+          id: reviewId
         }
-        return data;
+      });
+    } catch(err) {
+      logger.error('Error::' + err);
     }
-
-    async update(review) {
-        let data = {};
-        try {
-            task.updateddate = new Date().toISOString();
-            data = await this.db.reviews.update({...review}, {
-                where: {
-                    id: task.id
-                }
-            });
-        } catch(err) {
-            logger.error('Error::' + err);
-        }
-        return data;
-    }
-
-    async delete(reviewId) {
-        let data = {};
-        try {
-            data = await this.db.reviews.destroy({
-                where: {
-                    id: reviewId
-                }
-            });
-        } catch(err) {
-            logger.error('Error::' + err);
-        }
-        return data;
-    }
-
+    return data;
+  }
 }
 
 export default ReviewRepository;

@@ -12,6 +12,7 @@ import cookieParser from 'cookie-parser';
 import authRoutes from './routes/auth.routes.js';
 import reviewRoutes from './routes/review.routes.js';
 import userRoutes from './routes/user.routes.js';
+import articleRoutes from './routes/article.routes.js';
 import storageRoutes from './routes/storage.routes.js';
 
 /* CONFIGURATIONS */
@@ -33,8 +34,9 @@ app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
 app.use('/api', userRoutes);
 app.use('/api', reviewRoutes);
+app.use('/api', articleRoutes);
 app.use('/api/auth', authRoutes);
-app.use(storageRoutes);
+app.use(storageRoutes); //TODO убрать отсюда 
 
 //TODO: add auth middleware
 

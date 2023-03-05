@@ -6,6 +6,7 @@ const API = {
   USERS: `${BACKEND_URL}/api/users`,
   REVIEW: `${BACKEND_URL}/api/review`,
   REVIEWS: `${BACKEND_URL}/api/reviews`,
+  ARTICLE: `${BACKEND_URL}/api/article`,
   MEDIA: `${BACKEND_URL}/media`,
   FILES: `${BACKEND_URL}/file`,
 }

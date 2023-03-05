@@ -17,6 +17,7 @@ type TReview = {
   name: string;
   createdAt: string;
   updatedAt: string;
+  fileStorageName: string;
 };
 
 type TRouteItemConfig = {

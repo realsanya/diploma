@@ -1,16 +1,11 @@
 import { Outlet } from "react-router-dom";
 import StepNavigation from 'components/step-navigation';
 
-import { Button, useTheme } from '@mui/material';
+import { useTheme } from '@mui/material';
 import Page from 'components/page';
-import { useCallback } from "react";
 
 const ReviewUpdateForm = () => {
   const theme = useTheme();
-
-  const handleSubmit = useCallback(() => {
-
-  }, []);
 
   return (
     <Page>

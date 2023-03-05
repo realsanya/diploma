@@ -1,6 +1,5 @@
 import { reviewRepository } from '../repositories/index.js';
 
-
 class ReviewService {
     
     constructor() {}

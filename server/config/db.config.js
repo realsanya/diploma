@@ -1,6 +1,6 @@
 import { Sequelize, Model, DataTypes } from 'sequelize';
 import dotenv from 'dotenv';
-import { ReviewModel, UserModel } from '../models/index.js';
+import { ReviewModel, UserModel, ArticleModel } from '../models/index.js';
 import { logger } from '../logger/index.js';
 
 dotenv.config();
@@ -27,8 +27,10 @@ const connect = () => {
   const db = {};
   db.Sequelize = Sequelize;
   db.sequelize = sequelize;
+  
   db.reviews = ReviewModel(sequelize, DataTypes, Model);
   db.users = UserModel(sequelize, DataTypes, Model);
+  db.articles = ArticleModel(sequelize, DataTypes, Model);
 
   sequelize.sync().then(() => {
     logger.info('Tables created successfully!');
@@ -38,7 +40,6 @@ const connect = () => {
  
 
   return db;
-
 }
 
 export {

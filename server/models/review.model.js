@@ -7,10 +7,14 @@ export default (sequelize, DataTypes, Model) => {
         type: DataTypes.STRING,
         allowNull: false
       },
-      // createdAt: {
-      //   type: DataTypes.STRING,
-      //   allowNull: false
-      // },
+      articleId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'articles',
+          key: 'id',
+        },
+        allowNull: false,
+      }
     }, {
       sequelize,
       modelName: 'review'
