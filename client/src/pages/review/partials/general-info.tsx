@@ -1,5 +1,6 @@
 //@ts-nocheck
 import { useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Dropzone from 'react-dropzone';
 import { Formik } from 'formik';
@@ -14,6 +15,7 @@ import FlexBetween from 'components/flex-between';
 const GeneralInfo = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const { id: userId } = useSelector((state: any) => state.user);
 
   const handleFormSubmit = useCallback(async (data: TReview) => {
     try {
@@ -43,7 +45,7 @@ const GeneralInfo = () => {
   return (
     <Formik
         onSubmit={handleFormSubmit}
-        initialValues={{ file: null, name: 'Новая рецензия' }}
+        initialValues={{ file: null, name: 'Новая рецензия', userId }}
     > 
       {({
         handleSubmit,

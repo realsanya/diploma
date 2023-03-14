@@ -11,7 +11,7 @@ class ReviewRepository {
 
   async getAll() {
     try {
-      const reviews = await this.db.reviews.findAll();
+      const reviews = await this.db.reviews.findAll({ order: [['updatedAt', 'DESC']] });
       return reviews;
     } catch (err) {
       logger.error('Error::' + err);
