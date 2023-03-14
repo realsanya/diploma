@@ -16,7 +16,7 @@ const HomePage = () => {
   //TODO: вынести в хук
   const getReviews = useCallback(async () => {
     try {
-      const response = await fetch(API.REVIEWS, {
+      const response = await fetch(`${API.REVIEWS}/${id}`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
       });
@@ -33,7 +33,7 @@ const HomePage = () => {
     } catch (error) {
       // setError(error.message || 'Что-то пошло не так');
     }
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     getReviews();

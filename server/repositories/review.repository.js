@@ -9,9 +9,9 @@ class ReviewRepository {
     this.db = connect();
   }
 
-  async getAll() {
+  async getAllByUserId(userId) {
     try {
-      const reviews = await this.db.reviews.findAll({ order: [['updatedAt', 'DESC']] });
+      const reviews = await this.db.reviews.findAll({ where: { 'userId': userId }, order: [['updatedAt', 'DESC']] });
       return reviews;
     } catch (err) {
       logger.error('Error::' + err);

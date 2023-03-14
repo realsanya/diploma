@@ -4,8 +4,8 @@ class ReviewService {
     
     constructor() {}
 
-    async getReviews() {
-        return await reviewRepository.getAll();
+    async getReviews(userId) {
+        return await reviewRepository.getAllByUserId(userId);
     }
 
     async createReview(review) {

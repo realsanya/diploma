@@ -3,9 +3,9 @@ import { logger } from '../logger/index.js';
 
 class ReviewController {
 
-    async getReviews() {
+    async getReviews(userId) {
         logger.info('Controller: getReviews')
-        return await reviewService.getReviews();
+        return await reviewService.getReviews(userId);
     }
 
     async createReview(review) {

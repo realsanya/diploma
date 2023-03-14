@@ -4,8 +4,8 @@ import { reviewController } from '../controllers/index.js';
 
 const router = express.Router()
 
-router.get('/reviews', (req, res) => {
-  reviewController.getReviews().then(data => {
+router.get('/reviews/:userId', (req, res) => {
+  reviewController.getReviews(req.params.userId).then(data => {
     return res.json(data);
   });
 });
