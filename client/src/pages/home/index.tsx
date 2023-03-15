@@ -60,7 +60,7 @@ const HomePage = () => {
           gap="1.5rem"
           mt={isNonMobileScreens ? undefined : '2rem'}>
             {reviews.map((review) => (
-               <ReviewWidget key={review.id} data={review} />
+               <ReviewWidget key={review.id} data={review} refetchReviews={getReviews}/>
             ))}
         </Box>
         {isNonMobileScreens && <Box flexBasis='26%'><CreateWidget /></Box>}
