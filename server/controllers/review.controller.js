@@ -8,6 +8,11 @@ class ReviewController {
         return await reviewService.getReviews(userId);
     }
 
+    async getReview(reviewId) {
+        logger.info('Controller: getReview')
+        return await reviewService.getReview(reviewId);
+    }
+
     async createReview(review) {
         logger.info('Controller: createReview', review);
         return await reviewService.createReview(review);

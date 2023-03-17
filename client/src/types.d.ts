@@ -2,6 +2,7 @@ type TState = {
   mode: TTheme,
   user: TUser | null,
   token: string | null,
+  currentReview: TReview | null;
 }
 
 type TTheme = 'light' | 'dark';

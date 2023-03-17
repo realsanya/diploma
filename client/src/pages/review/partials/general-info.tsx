@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Dropzone from 'react-dropzone';
@@ -10,12 +10,14 @@ import { Box, useTheme, Typography, Button, TextField } from '@mui/material';
 import { EditOutlined } from '@mui/icons-material';
 
 import FlexBetween from 'components/flex-between';
+import { detectMimeType } from 'pages/utils';
 
 
 const GeneralInfo = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const { id: userId } = useSelector((state: any) => state.user);
+  const currentReview = useSelector((state: any) => state.currentReview);
 
   const handleFormSubmit = useCallback(async (data: TReview) => {
     try {
@@ -42,10 +44,21 @@ const GeneralInfo = () => {
     }
   }, [navigate]);
 
+  const isUpdate = useMemo(() => window.location.href.includes('update'), []);
+  const initialValues = useMemo(() => isUpdate ? {
+    file: currentReview?.file,
+    name: currentReview?.review?.name,
+    userId,
+  } : {
+    file: null,
+    name: 'Новая рецензия',
+    userId,
+  }, [isUpdate, currentReview, userId]);
+
   return (
     <Formik
         onSubmit={handleFormSubmit}
-        initialValues={{ file: null, name: 'Новая рецензия', userId }}
+        initialValues={initialValues}
     > 
       {({
         handleSubmit,
@@ -81,6 +94,8 @@ const GeneralInfo = () => {
           }
         };
 
+        console.log(detectMimeType(currentReview?.file));
+
 
         //TODO: добавить поля для создания рецензии
         return (
@@ -107,30 +122,35 @@ const GeneralInfo = () => {
                 borderRadius="5px"
                 p="1rem"
               >
-                <Dropzone
-                  acceptedFiles=".docx, .pdf"
-                  multiple={false}
-                  onDrop={handleUploadFile}
-                >
-                  {({ getRootProps, getInputProps }) => (
-                    <Box
-                      {...getRootProps()}
-                      border={`2px dashed ${theme.palette.primary.main}`}
-                      p="1rem"
-                      sx={{ '&:hover': { cursor: 'pointer' }}}
-                    >
-                      <input {...getInputProps()} />
-                      {!values.file ? (
-                        <p>Добавить статью (.pdf, .docx)</p>
-                      ) : (
-                        <FlexBetween>
-                          <Typography>{values.file.name}</Typography>
-                          <EditOutlined />
-                        </FlexBetween>
-                      )}
-                    </Box>
-                  )}
-                </Dropzone>
+                {isUpdate ? (
+                  <a href={`data:application/pdf;base64, ${currentReview?.file}`} download={currentReview?.fileName}>{currentReview?.fileName}</a>
+                ) : (
+                  <Dropzone
+                    acceptedFiles=".docx, .pdf"
+                    multiple={false}
+                    onDrop={handleUploadFile}
+                    disabled={isUpdate}
+                  >
+                    {({ getRootProps, getInputProps }) => (
+                      <Box
+                        {...getRootProps()}
+                        border={`2px dashed ${theme.palette.primary.main}`}
+                        p="1rem"
+                        sx={{ '&:hover': { cursor: 'pointer' }}}
+                      >
+                        <input {...getInputProps()} />
+                        {!values.file ? (
+                          <p>Добавить статью (.pdf, .docx)</p>
+                        ) : (
+                          <FlexBetween>
+                            <Typography>{values.file.name}</Typography>
+                            <EditOutlined />
+                          </FlexBetween>
+                        )}
+                      </Box>
+                    )}
+                  </Dropzone>
+                )}
               </Box>
             </Box>
             <Button
@@ -144,7 +164,7 @@ const GeneralInfo = () => {
                 }
               }}
               onClick={handleSubmit}>
-              Сохранить и перейти к анализу
+              {isUpdate ? 'Обновить' : 'Сохранить'} и перейти к анализу
             </Button>
           </form>
         )

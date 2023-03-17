@@ -19,6 +19,16 @@ class ReviewRepository {
     }
   }
 
+  async getById(reviewId) {
+    try {
+      const review = await this.db.reviews.findOne({ where: { 'id': reviewId } });
+      return review;
+    } catch (err) {
+      logger.error('Error::' + err);
+      return null;
+    }
+  }
+
   async create(review) {
     let data = {};
     try {

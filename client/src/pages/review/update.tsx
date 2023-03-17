@@ -1,11 +1,43 @@
-import { Outlet } from "react-router-dom";
-import StepNavigation from 'components/step-navigation';
+import { useCallback, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Outlet, useParams } from 'react-router-dom';
 
-import { useTheme } from '@mui/material';
+import API from 'api';
+import { setCurrentReview } from 'state';
+import StepNavigation from 'components/step-navigation';
 import Page from 'components/page';
+import { useTheme } from '@mui/material';
 
 const ReviewUpdateForm = () => {
   const theme = useTheme();
+  const { reviewId } = useParams();
+  const token = useSelector((state: any) => state.token);
+  const dispatch = useDispatch();
+
+  const getReview = useCallback(async () => {
+    try {
+      const response = await fetch(`${API.REVIEW}/${reviewId}`, {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${token}`}
+      });
+
+      const review = await response.json()
+
+      if (response.ok) {
+        dispatch(
+          setCurrentReview({
+            currentReview: review,
+          })
+        );
+      }
+    } catch (err) {
+      //TODO
+    }
+  }, [reviewId, token, dispatch]);
+
+  useEffect(() => {
+    getReview();
+  }, [getReview]);
 
   return (
     <Page>

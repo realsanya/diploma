@@ -1,10 +1,13 @@
+import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
 
 const Validation = () => {
 
+  const currentReview = useSelector((state: any) => state.currentReview);
+
   return (
     <div>
-      Validation
+      Validation {currentReview?.review?.name}
     </div>
   )
 

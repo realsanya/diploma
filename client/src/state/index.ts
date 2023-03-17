@@ -4,6 +4,7 @@ const initialState: TState = {
   mode: 'light',
   user: null,
   token: null,
+  currentReview: null,
 };
 
 export const authSlice = createSlice({
@@ -21,6 +22,9 @@ export const authSlice = createSlice({
       state.user = null;
       state.token = null;
     },
+    setCurrentReview: (state, action) => {
+      state.currentReview = action.payload.currentReview;
+    }
   },
 });
 
@@ -28,5 +32,6 @@ export const {
   setMode,
   setLogin,
   setLogout,
+  setCurrentReview,
 } = authSlice.actions;
 export default authSlice.reducer;

@@ -19,6 +19,16 @@ class ArticleRepository {
     }
   }
 
+  async getById(articleId) {
+    try {
+      const article = await this.db.articles.findOne({ where: { 'id': articleId } });
+      return article;
+    } catch (err) {
+      logger.error('Error::' + err);
+      return null;
+    }
+  }
+
   async create(article) {
     let data = {};
     try {

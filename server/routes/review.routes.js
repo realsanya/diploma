@@ -12,6 +12,10 @@ router.post('/review', (req, res) => {
   reviewController.createReview(req.body).then(data => res.json(data));
 });
 
+router.get('/review/:reviewId', (req, res) => {
+  reviewController.getReview(req.params.reviewId).then(data => res.json(data));
+})
+
 router.delete('/review/:reviewId', (req, res) => {
   reviewController.deleteReview(req.params.reviewId).then(data => res.json(data));
 })
