@@ -31,7 +31,7 @@ const ReviewUpdateForm = () => {
         );
       }
     } catch (err) {
-      //TODO
+      console.error(err);
     }
   }, [reviewId, token, dispatch]);
 

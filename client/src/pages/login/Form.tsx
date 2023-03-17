@@ -27,13 +27,13 @@ const registerSchema = yup.object().shape({
   firstName: yup.string().required(REQUIRED),
   lastName: yup.string().required(REQUIRED),
   email: yup.string().email('Некорректные данные').required(REQUIRED),
-  password: yup.string().required(REQUIRED), //TODO: добавить регулярку
+  password: yup.string().required(REQUIRED),
   picture: yup.string(),
 });
 
 const loginSchema = yup.object().shape({
   email: yup.string().email('Некорректные данные').required(REQUIRED),
-  password: yup.string().required(REQUIRED), //TODO: добавить регулярку
+  password: yup.string().required(REQUIRED),
 });
 
 const initialValuesRegister = {

@@ -36,9 +36,7 @@ app.use('/api', userRoutes);
 app.use('/api', reviewRoutes);
 app.use('/api', articleRoutes);
 app.use('/api/auth', authRoutes);
-app.use(storageRoutes); //TODO убрать отсюда 
-
-//TODO: add auth middleware
+app.use(storageRoutes);
 
 app.use((_, res) => {
   res.status(404).send("Sorry can't find that!")
@@ -46,10 +44,6 @@ app.use((_, res) => {
 
 app.use((err) => {
   res.status(500).send({ error: err })
-});
-
-app.get('/', (req, res) => {
-  res.send(`<h1>API Works !!!</h1>`)
 });
 
 const hostname = process.env.HOST;

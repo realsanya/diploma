@@ -29,7 +29,6 @@ const UserWidget = ({ userId }: TUserWidget) => {
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
 
-  //TODO: добавить обработчик ошибок
   const getUser = async () => {
     try {
       const response = await fetch(`${API.USERS}/${userId}`, {
@@ -49,7 +48,7 @@ const UserWidget = ({ userId }: TUserWidget) => {
       }
       setUser(data);
     } catch (err) {
-      //TODO; разлогинить
+      console.error(err);
     }
   };
 

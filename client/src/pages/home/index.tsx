@@ -2,42 +2,20 @@ import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import API from 'api';
-import { Box, useMediaQuery } from '@mui/material';
+import { Box, Typography, useMediaQuery } from '@mui/material';
 import Navbar from 'modules/navbar';
 import UserWidget from 'modules/user-widget';
 import CreateWidget from 'modules/create-widget';
 import ReviewWidget from 'modules/review-widget';
+import useReviews from './useReviews';
 
 const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
+
   const { id } = useSelector((state: any) => state.user);
-  const [reviews, setReviews] = useState<Array<TReview>>([]);
+  const { reviews, isLoading, getReviews } = useReviews({ id });
 
-  //TODO: вынести в хук
-  const getReviews = useCallback(async () => {
-    try {
-      const response = await fetch(`${API.REVIEWS}/${id}`, {
-        method: 'GET',
-        headers: { "Content-Type": "application/json" },
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message);
-      } else {
-        setReviews(result);
-  
-        return result;
-      }
-    } catch (error) {
-      // setError(error.message || 'Что-то пошло не так');
-    }
-  }, [id]);
-
-  useEffect(() => {
-    getReviews();
-  }, [getReviews]);
+  if (isLoading) return null;
 
   return (
     <Box>
@@ -59,8 +37,10 @@ const HomePage = () => {
           flexDirection="column"
           gap="1.5rem"
           mt={isNonMobileScreens ? undefined : '2rem'}>
-            {reviews.map((review) => (
-               <ReviewWidget key={review.id} data={review} refetchReviews={getReviews}/>
+            {!reviews.length ? 
+              <Typography>Рецензии не найдены</Typography> 
+            : reviews.map((review) => (
+              <ReviewWidget key={review.id} data={review} refetchReviews={getReviews}/>
             ))}
         </Box>
         {isNonMobileScreens && <Box flexBasis='26%'><CreateWidget /></Box>}

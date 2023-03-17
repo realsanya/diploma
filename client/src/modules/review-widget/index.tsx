@@ -42,7 +42,7 @@ const ReviewWidget = ({ data, refetchReviews }: TReviewWidget) => {
         refetchReviews();
       }
     } catch (err) {
-      //TODO
+      console.error(err);
     }
   }, [id, token, hideDeleteModal, refetchReviews]);
 

@@ -90,7 +90,7 @@ const GeneralInfo = () => {
               setFieldValue('file', acceptedFiles[0]);
             }
           } catch (err) {
-            //TODO 
+            console.error(err); 
           }
         };
 

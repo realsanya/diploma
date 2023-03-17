@@ -37,6 +37,4 @@ router.get('/media/:name', async (req, res) => {
   res.send(b64);
 });
 
-//TODO: get for file 
-
 export default router;
