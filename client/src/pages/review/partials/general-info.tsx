@@ -10,8 +10,6 @@ import { Box, useTheme, Typography, Button, TextField } from '@mui/material';
 import { EditOutlined } from '@mui/icons-material';
 
 import FlexBetween from 'components/flex-between';
-import { detectMimeType } from 'pages/utils';
-
 
 const GeneralInfo = () => {
   const theme = useTheme();
@@ -93,9 +91,6 @@ const GeneralInfo = () => {
             console.error(err); 
           }
         };
-
-        console.log(detectMimeType(currentReview?.file));
-
 
         //TODO: добавить поля для создания рецензии
         return (

@@ -10,7 +10,7 @@ const ReviewCreateForm = () => {
   return (
     <Page>
       <Page.Header>
-        <Page.Title style={{ color: theme.palette.neutral.dark }}>Новая рецензия</Page.Title>
+        <Page.Title style={{ color: theme.palette.neutral.dark }}>Создание рецензии</Page.Title>
         <StepNavigation 
           links={[
             { title: 'Общее', href: 'general-info', disabled: false },
