@@ -123,11 +123,22 @@ const TextEditor = () => {
 
 
   useEffect(() => {
+    const rerenderPredictableText = () => {
+      const predictableContainer = document.getElementById(predictableContainerId);
+      const { top, left } = getLastWordCoordinates();
+    
+      if (predictableContainer) {
+        predictableContainer.style.top = `${top}px`;
+        predictableContainer.style.left = `${left}px`;
+        predictableContainer.style.display = 'inline';
+      }
+    }
+
     new MediumEditor(
       editorContainer.current!,
       {
         placeholder: {
-          text: 'Start writing...'
+          text: 'Начните печатать...',
         },
         toolbar: false,
         autoLink: false,
@@ -152,13 +163,12 @@ const TextEditor = () => {
             e.key !== 'Backspace' &&
             e.key !== 'Enter' &&
             // Only check for suggested phrases if the user is typing at the end of the document.
-            isCaretAtEnd( editor )
+            isCaretAtEnd(editor)
         ) {
             const incompleteText = document.getSelection()?.anchorNode;
 
             if (incompleteText) {
               const { top, left } = getLastWordCoordinates();
-              console.log({ top, left });
               // We create the visual effect of a placeholder element by overlaying the
               // suggestion container at the exact position of the incomplete text.
               predictableContainer.style.top = `${top}px`;
@@ -168,7 +178,7 @@ const TextEditor = () => {
         }
       });
       editor.style.cssText = `
-        width: 100%;
+        width: 70%;
         height: 570px;
         color: ${theme.palette.neutral.main};
         background-color: ${theme.palette.background.default};
@@ -250,33 +260,18 @@ const TextEditor = () => {
         }
       });
 
-      editor.addEventListener('scroll', () => {
-        const predictableContainer = document.getElementById(predictableContainerId);
-        const { top, left } = getLastWordCoordinates();
-      
-        if (predictableContainer) {
-          predictableContainer.style.top = `${top}px`;
-          predictableContainer.style.left = `${left}px`;
-          predictableContainer.style.display = 'inline';
-        }
-      });
+   
+
+      editor.addEventListener('scroll', rerenderPredictableText);
     };
 
 
-    document.addEventListener('scroll', () => {
-      const predictableContainer = document.getElementById(predictableContainerId);
-      const { top, left } = getLastWordCoordinates();
-    
-      if (predictableContainer) {
-        predictableContainer.style.top = `${top}px`;
-        predictableContainer.style.left = `${left}px`;
-        predictableContainer.style.display = 'inline';
-      }
-    });
+    document.addEventListener('scroll', rerenderPredictableText);
 
 
     return () => {
       document.removeEventListener('keydown', preventTabDefault);
+      document.removeEventListener('scroll', rerenderPredictableText);
     }
   }, [theme, editorId, editorContainer, predictableContainerId, getLastWordCoordinates, insertTextAtCursor]);
 
