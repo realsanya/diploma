@@ -101,7 +101,7 @@ export default class Predictable {
 
       const selected = this.onTabPress;
       const resultsList = this.predictableContainer.view;
-      const clearResults = predictableMethods.clearResults( resultsList );
+      const clearResults = predictableMethods.clearResults(resultsList);
 
       if (triggerCondition) {
         this.getMatchingSuggestion(this.suggestionsData)

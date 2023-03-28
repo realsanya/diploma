@@ -1,10 +1,10 @@
-import { createRef, useCallback, useEffect, useMemo } from 'react';
+import { createRef, SyntheticEvent, useCallback, useEffect, useMemo } from 'react';
 import MediumEditor from 'medium-editor';
 
 import Predictable from 'modules/text-editor/predictable/predictable';
 import { generateRandomId } from 'modules/text-editor/predictable/utils';
 import { words } from './words';
-import { useTheme } from '@mui/material';
+import { ClickAwayListenerProps, useTheme } from '@mui/material';
 
 
 const TextEditor = () => {
@@ -132,7 +132,16 @@ const TextEditor = () => {
         predictableContainer.style.left = `${left}px`;
         predictableContainer.style.display = 'inline';
       }
-    }
+    };
+
+    const clickOutside = (ev: any) => {
+      if (editorContainer.current && !editorContainer.current.contains(ev.target)) {
+        const predictableContainer = document.getElementById(predictableContainerId);
+        if (predictableContainer) {
+          predictableContainer.style.display = 'none';
+        }
+      }
+    };
 
     new MediumEditor(
       editorContainer.current!,
@@ -267,11 +276,17 @@ const TextEditor = () => {
 
 
     document.addEventListener('scroll', rerenderPredictableText);
-
+    document.addEventListener('click', clickOutside);
 
     return () => {
       document.removeEventListener('keydown', preventTabDefault);
       document.removeEventListener('scroll', rerenderPredictableText);
+      document.removeEventListener('click', clickOutside);
+
+      const predictableContainer = document.getElementById(predictableContainerId);
+      if (predictableContainer) {
+        predictableContainer.style.display = 'none';
+      }
     }
   }, [theme, editorId, editorContainer, predictableContainerId, getLastWordCoordinates, insertTextAtCursor]);
 
