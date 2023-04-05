@@ -11,6 +11,14 @@ export default (sequelize, DataTypes, Model) => {
         type: DataTypes.STRING,
         allowNull: false
       },
+      text: {
+        type: DataTypes.TEXT('long'),
+        allowNull: false
+      },
+      keywords: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        allowNull: false,
+      }
     }, {
       sequelize,
       modelName: 'article',

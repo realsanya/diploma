@@ -135,7 +135,7 @@ const GeneralInfo = () => {
                       >
                         <input {...getInputProps()} />
                         {!values.file ? (
-                          <p>Добавить статью (.pdf, .docx)</p>
+                          <p>Добавить рукопись (.pdf, .doc, .docx)</p>
                         ) : (
                           <FlexBetween>
                             <Typography>{values.file.name}</Typography>
