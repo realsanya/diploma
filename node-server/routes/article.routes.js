@@ -2,6 +2,7 @@ import express from 'express';
 
 import { articleController, storageController } from '../controllers/index.js';
 import { textExtractor } from '../utils/text-extractor.js';
+import { keywordsExtractor } from '../utils/keywords-extractor.js';
 
 const FILE_TYPES = [
   'application/pdf',
@@ -23,6 +24,7 @@ router.post('/article', async (req, res) => {
     textExtractor(req.files.file).then(async (text) => {
       // create article entry
       //TODO добавить извлечение ключевых слов
+      keywordsExtractor(text);
       await articleController.createArticle({ 
         ...req.body,
         storageName,

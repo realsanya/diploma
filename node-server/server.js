@@ -14,6 +14,7 @@ import reviewRoutes from './routes/review.routes.js';
 import userRoutes from './routes/user.routes.js';
 import articleRoutes from './routes/article.routes.js';
 import storageRoutes from './routes/storage.routes.js';
+import { executePython } from './utils/execute-python.js';
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -37,6 +38,16 @@ app.use('/api', reviewRoutes);
 app.use('/api', articleRoutes);
 app.use('/api/auth', authRoutes);
 app.use(storageRoutes);
+
+app.get('/python', async (req, res) => {
+  try {
+    const result = await executePython('./keywords-extractor.py', []);
+  
+    res.json({ result });
+  } catch (err) {
+    res.status(500).json({ error: err })
+  }
+});
 
 app.use((_, res) => {
   res.status(404).send("Sorry can't find that!")
