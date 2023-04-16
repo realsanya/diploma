@@ -15,13 +15,10 @@ export default (sequelize, DataTypes, Model) => {
         type: DataTypes.TEXT('long'),
         allowNull: false
       },
-      keywords: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        allowNull: false,
-      }
     }, {
       sequelize,
       modelName: 'article',
+      freezeTableName: true,
     });
     
     return Article;

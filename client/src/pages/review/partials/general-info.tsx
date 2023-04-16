@@ -46,17 +46,19 @@ const GeneralInfo = () => {
   const initialValues = useMemo(() => isUpdate ? {
     file: currentReview?.file,
     name: currentReview?.review?.name,
+    articleId: currentReview?.review?.articleId,
     userId,
   } : {
     file: null,
     name: 'Новая рецензия',
+    articleId: null,
     userId,
   }, [isUpdate, currentReview, userId]);
 
   return (
     <Formik
-        onSubmit={handleFormSubmit}
-        initialValues={initialValues}
+      onSubmit={handleFormSubmit}
+      initialValues={initialValues}
     > 
       {({
         handleSubmit,

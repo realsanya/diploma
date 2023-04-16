@@ -27,7 +27,8 @@ export default (sequelize, DataTypes, Model) => {
     },
   }, {
     sequelize,
-    modelName: 'users'
+    modelName: 'user',
+    freezeTableName: true,
   });
     
   return User;

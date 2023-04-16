@@ -11,7 +11,7 @@ class ReviewRepository {
 
   async getAllByUserId(userId) {
     try {
-      const reviews = await this.db.reviews.findAll({ where: { 'userId': userId }, order: [['updatedAt', 'DESC']] });
+      const reviews = await this.db.review.findAll({ where: { 'userId': userId }, order: [['updatedAt', 'DESC']] });
       return reviews;
     } catch (err) {
       logger.error('Error::' + err);
@@ -21,7 +21,7 @@ class ReviewRepository {
 
   async getById(reviewId) {
     try {
-      const review = await this.db.reviews.findOne({ where: { 'id': reviewId } });
+      const review = await this.db.review.findOne({ where: { 'id': reviewId } });
       return review;
     } catch (err) {
       logger.error('Error::' + err);
@@ -33,7 +33,7 @@ class ReviewRepository {
     let data = {};
     try {
       review.createdate = new Date().toISOString();
-      data = await this.db.reviews.create(review);
+      data = await this.db.review.create(review);
     } catch(err) {
       logger.error('Error::' + err);
     }
@@ -44,7 +44,7 @@ class ReviewRepository {
     let data = {};
     try {
       review.updateddate = new Date().toISOString();
-      data = await this.db.reviews.update({...review}, {
+      data = await this.db.review.update({...review}, {
         where: {
           id: review.id
         }
@@ -58,7 +58,7 @@ class ReviewRepository {
   async delete(reviewId) {
     let data = {};
     try {
-      data = await this.db.reviews.destroy({
+      data = await this.db.review.destroy({
         where: {
           id: reviewId
         }

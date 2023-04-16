@@ -28,11 +28,11 @@ const connect = () => {
   db.Sequelize = Sequelize;
   db.sequelize = sequelize;
   
-  db.reviews = ReviewModel(sequelize, DataTypes, Model);
-  db.users = UserModel(sequelize, DataTypes, Model);
-  db.articles = ArticleModel(sequelize, DataTypes, Model);
+  db.review = ReviewModel(sequelize, DataTypes, Model);
+  db.user = UserModel(sequelize, DataTypes, Model);
+  db.article = ArticleModel(sequelize, DataTypes, Model);
 
-  sequelize.sync().then(() => {
+  sequelize.sync({ force: true }).then(() => {
     logger.info('Tables created successfully!');
   }).catch((error) => {
     logger.error('Unable to create tables: ', error);

@@ -26,7 +26,7 @@ class StorageService {
   async downloadFile(fileName) {
     let download = await s3.Download(`files/${fileName}`);
 
-    const buffer = download.data.Body;
+    const buffer = download.data?.Body;
 
     const b64 = buffer.toString('base64');
       

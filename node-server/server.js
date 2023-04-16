@@ -14,7 +14,6 @@ import reviewRoutes from './routes/review.routes.js';
 import userRoutes from './routes/user.routes.js';
 import articleRoutes from './routes/article.routes.js';
 import storageRoutes from './routes/storage.routes.js';
-import { executePython } from './utils/execute-python.js';
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);

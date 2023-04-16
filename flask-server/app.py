@@ -9,6 +9,9 @@ db = SQLAlchemy(app)
 app.app_context().push()
 
 from models.Article import Article
+from routes.articles import articles
+
+app.register_blueprint(articles, url_prefix='/')
 
 def format_article(article):
   return {
@@ -21,9 +24,7 @@ def hello():
 
 @app.route('/article', methods=['POST'])
 def create_event():
-  print('This is standard output', file=sys.stdout)
   body = request.get_json()
-  print(body, file=sys.stdout)
   article = Article(body)
   db.session.add(article)
   db.session.commit()

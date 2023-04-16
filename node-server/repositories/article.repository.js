@@ -11,7 +11,7 @@ class ArticleRepository {
 
   async getAll() {
     try {
-      const articles = await this.db.articles.findAll();
+      const articles = await this.db.article.findAll();
       return articles;
     } catch (err) {
       logger.error('Error::' + err);
@@ -21,7 +21,7 @@ class ArticleRepository {
 
   async getById(articleId) {
     try {
-      const article = await this.db.articles.findOne({ where: { 'id': articleId } });
+      const article = await this.db.article.findOne({ where: { 'id': articleId } });
       return article;
     } catch (err) {
       logger.error('Error::' + err);
@@ -33,7 +33,7 @@ class ArticleRepository {
     let data = {};
     try {
       article.createdate = new Date().toISOString();
-      data = await this.db.articles.create(article);
+      data = await this.db.article.create(article);
     } catch(err) {
       logger.error('Error::' + err);
     }
@@ -44,7 +44,7 @@ class ArticleRepository {
     let data = {};
       try {
         article.updateddate = new Date().toISOString();
-            data = await this.db.articles.update({...article}, {
+            data = await this.db.article.update({...article}, {
           where: {
             id: article.id
           }
@@ -58,7 +58,7 @@ class ArticleRepository {
   async delete(articleId) {
     let data = {};
     try {
-    data = await this.db.articles.destroy({
+    data = await this.db.article.destroy({
       where: {
         id: articleId
       }

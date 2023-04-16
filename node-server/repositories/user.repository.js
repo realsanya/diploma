@@ -20,7 +20,7 @@ class UserRepository {
     try {
       const { firstName, email, lastName, password, pictureStorageName } = req.body;
 
-      const user = await this.db.users.findOne({
+      const user = await this.db.user.findOne({
         where: {
           email: email
         }
@@ -38,7 +38,7 @@ class UserRepository {
         pictureStorageName,
       };
 
-      const createdUser = await this.db.users.create(data);
+      const createdUser = await this.db.user.create(data);
 
       if (createdUser) {
         let token = jwt.sign({ id: createdUser.id }, process.env.SECRET_KEY, {
@@ -64,7 +64,7 @@ class UserRepository {
     try {
       const { email, password } = req.body;
    
-      const user = await this.db.users.findOne({
+      const user = await this.db.user.findOne({
         where: {
           email: email
         }
@@ -101,8 +101,7 @@ class UserRepository {
 
   async getUsers() {
     try {
-      const users = await this.db.users.findAll();
-      console.log('users:::', users);
+      const users = await this.db.user.findAll();
       return users;
     } catch (err) {
       logger.error(err);
@@ -112,13 +111,11 @@ class UserRepository {
 
   async getUserById(userId) {
     try {
-      console.log(userId);
-      const user = await this.db.users.findOne({
+      const user = await this.db.user.findOne({
         where: {
           id: userId
         }
       });
-
       return user;
     } catch (err) {
       return null;

@@ -38,7 +38,7 @@ const HomePage = () => {
           gap="1.5rem"
           mt={isNonMobileScreens ? undefined : '2rem'}>
             {!reviews.length ? 
-              <Typography>Рецензии не найдены</Typography> 
+              <Typography fontSize="20px" textAlign="center" marginTop="20px">Рецензии не найдены</Typography> 
             : reviews.map((review) => (
               <ReviewWidget key={review.id} data={review} refetchReviews={getReviews}/>
             ))}

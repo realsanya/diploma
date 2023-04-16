@@ -10,7 +10,7 @@ export default (sequelize, DataTypes, Model) => {
       userId: {
         type: DataTypes.INTEGER,
         references: {
-          model: 'users',
+          model: 'user',
           key: 'id',
         },
         allowNull: false,
@@ -18,14 +18,15 @@ export default (sequelize, DataTypes, Model) => {
       articleId: {
         type: DataTypes.INTEGER,
         references: {
-          model: 'articles',
+          model: 'article',
           key: 'id',
         },
         allowNull: false,
       }
     }, {
       sequelize,
-      modelName: 'review'
+      modelName: 'review',
+      freezeTableName: true,
     });
     
     return Review;
