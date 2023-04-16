@@ -1,14 +1,16 @@
-const BACKEND_URL = 'http://localhost:8081';
+const NODE_BACKEND_URL = 'http://localhost:8081';
+const FLASK_BACKEND_URL = 'http://localhost:8000';
 
 const API = {
-  REGISTER: `${BACKEND_URL}/api/auth/register`,
-  LOGIN: `${BACKEND_URL}/api/auth/login`,
-  USERS: `${BACKEND_URL}/api/users`,
-  REVIEW: `${BACKEND_URL}/api/review`,
-  REVIEWS: `${BACKEND_URL}/api/reviews`,
-  ARTICLE: `${BACKEND_URL}/api/article`,
-  MEDIA: `${BACKEND_URL}/media`,
-  FILES: `${BACKEND_URL}/file`,
+  REGISTER: `${NODE_BACKEND_URL}/api/auth/register`,
+  LOGIN: `${NODE_BACKEND_URL}/api/auth/login`,
+  USERS: `${NODE_BACKEND_URL}/api/users`,
+  REVIEW: `${NODE_BACKEND_URL}/api/review`,
+  REVIEWS: `${NODE_BACKEND_URL}/api/reviews`,
+  ARTICLE: `${NODE_BACKEND_URL}/api/article`,
+  MEDIA: `${NODE_BACKEND_URL}/media`,
+  FILES: `${NODE_BACKEND_URL}/file`,
+  ANALYSE: `${FLASK_BACKEND_URL}/analysis`
 }
 
 export default API;

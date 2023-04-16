@@ -1,14 +1,20 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, jsonify
 from models.Article import Article
-from app import db
+
 from utils.keywords_extractor import keywords_extractor
 
 articles = Blueprint('articles', __name__)
 
 @articles.route('/analysis/<articleId>', methods=['GET'])
 def analyse(articleId):
-  # body = request.get_json()
-  article = Article.query.get(articleId)
-  db.session.add(article)
-  db.session.commit()
-  return jsonify('Success!!!')
+  result = {}
+  article = Article.query.get_or_404(articleId)
+  data = article.serialize()
+
+  if (data):
+    keywords = keywords_extractor(article.text)
+    result['keywords'] = keywords
+
+    return jsonify(result)
+  
+  return jsonify()

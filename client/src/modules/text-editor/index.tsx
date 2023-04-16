@@ -1,13 +1,16 @@
-import { createRef, SyntheticEvent, useCallback, useEffect, useMemo } from 'react';
+import { createRef, useCallback, useEffect, useMemo } from 'react';
 import MediumEditor from 'medium-editor';
 
 import Predictable from 'modules/text-editor/predictable/predictable';
 import { generateRandomId } from 'modules/text-editor/predictable/utils';
-import { words } from './words';
-import { ClickAwayListenerProps, useTheme } from '@mui/material';
+import { useTheme } from '@mui/material';
 
+type TTextEditorProps = {
+  keywords: Array<String>
+}
 
-const TextEditor = () => {
+const TextEditor = (props: TTextEditorProps) => {
+  const { keywords } = props;
   const editorContainer = createRef<HTMLDivElement>();
   const theme = useTheme();
 
@@ -207,7 +210,7 @@ const TextEditor = () => {
       new Predictable({
         predictableContainerId,
         editorId,
-        data: { source: words },
+        data: { source: keywords },
         editor: editor,
         sensitivity: 3,
         predictableContainer: {
