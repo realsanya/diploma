@@ -10,7 +10,8 @@ const API = {
   ARTICLE: `${NODE_BACKEND_URL}/api/article`,
   MEDIA: `${NODE_BACKEND_URL}/media`,
   FILES: `${NODE_BACKEND_URL}/file`,
-  ANALYSE: `${FLASK_BACKEND_URL}/analysis`
+  ANALYSE: `${FLASK_BACKEND_URL}/analysis`,
+  PREDICT: `${FLASK_BACKEND_URL}/chat/predict`
 }
 
 export default API;

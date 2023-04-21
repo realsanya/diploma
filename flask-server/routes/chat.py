@@ -5,9 +5,8 @@ from utils.chatsonic import get_answer
 
 chat = Blueprint('chat', __name__)
 
-@chat.route('/predict', methods=['GET'])
+@chat.route('/predict', methods=['POST'])
 def predict():
-  result = {}
   data = request.get_json()
   question = data['question']
   if (question):
