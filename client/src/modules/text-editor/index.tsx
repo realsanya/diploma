@@ -19,8 +19,6 @@ const TextEditor = (props: TTextEditorProps) => {
   const token = useSelector((state: any) => state.token);
   const currentReview = useSelector((state: any) => state.currentReview);
 
-  console.log(currentReview);
-
   const predictableContainerId = useMemo(() => `${generateRandomId()}-${generateRandomId()}`, []);
   const editorId = useMemo(() => `${generateRandomId()}-${generateRandomId()}`, []);
 
@@ -118,12 +116,15 @@ const TextEditor = (props: TTextEditorProps) => {
     let selection,
         range;
 
-    if (window.getSelection) {
+    if (window.getSelection && editor) {
       selection = window.getSelection();
       if (selection && selection.getRangeAt && selection.rangeCount) {
-        range = selection.getRangeAt( 0 );
+        range = selection.getRangeAt(0);
         range.deleteContents();
-        range.insertNode( document.createTextNode( text ) );
+        //@ts-ignore
+        if (range.commonAncestorContainer.className.includes('medium')) {
+          range.insertNode(document.createTextNode(text));
+        }
       }
     }
     placeCaretAtEnd(editor);
