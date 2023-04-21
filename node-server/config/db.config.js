@@ -32,7 +32,8 @@ const connect = () => {
   db.user = UserModel(sequelize, DataTypes, Model);
   db.article = ArticleModel(sequelize, DataTypes, Model);
 
-  sequelize.sync({ force: true }).then(() => {
+  // { force: true }
+  sequelize.sync().then(() => {
     logger.info('Tables created successfully!');
   }).catch((error) => {
     logger.error('Unable to create tables: ', error);

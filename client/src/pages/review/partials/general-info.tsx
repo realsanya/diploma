@@ -35,7 +35,6 @@ const GeneralInfo = () => {
         const { id } = result;
 
         if (id) navigate(`/review/update/${id}/analysis`);
-        console.log(result);
       }
     } catch (error) {
       // setError(error.message || 'Что-то пошло не так');
@@ -47,11 +46,13 @@ const GeneralInfo = () => {
     file: currentReview?.file,
     name: currentReview?.review?.name,
     articleId: currentReview?.review?.articleId,
+    text: currentReview?.review?.text,
     userId,
   } : {
     file: null,
     name: 'Новая рецензия',
     articleId: null,
+    text: '',
     userId,
   }, [isUpdate, currentReview, userId]);
 

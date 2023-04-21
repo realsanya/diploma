@@ -20,4 +20,8 @@ router.delete('/review/:reviewId', (req, res) => {
   reviewController.deleteReview(req.params.reviewId).then(data => res.json(data));
 })
 
+router.put('/review/:reviewId', (req, res) => {
+  reviewController.updateReview(req.body).then(data => res.json(data));
+})
+
 export default router

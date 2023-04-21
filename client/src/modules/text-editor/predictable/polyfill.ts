@@ -1,6 +1,5 @@
 //@ts-nocheck
 //TODO: add types for props
-// Refs: https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill
 const CustomEventPolyfill = (event, params) => {
   params = params || { bubbles: false, cancelable: false, detail: undefined };
   const evt = document.createEvent("CustomEvent");
@@ -13,8 +12,6 @@ const CustomEventWrapper =
   (typeof window.CustomEvent === "function" && window.CustomEvent) || CustomEventPolyfill;
 
 const initElementClosestPolyfill = () => {
-  // Element.prototype.closest
-  // Refs: https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill
   if (!Element.prototype.matches) {
     Element.prototype.matches =
       Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;

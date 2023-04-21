@@ -22,6 +22,10 @@ export default (sequelize, DataTypes, Model) => {
           key: 'id',
         },
         allowNull: false,
+      },
+      text: {
+        type: DataTypes.TEXT,
+        allowNull: false,
       }
     }, {
       sequelize,

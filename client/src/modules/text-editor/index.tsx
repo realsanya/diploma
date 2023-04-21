@@ -1,9 +1,12 @@
 import { createRef, useCallback, useEffect, useMemo } from 'react';
 import MediumEditor from 'medium-editor';
+import { useSelector } from 'react-redux';
 
 import Predictable from 'modules/text-editor/predictable/predictable';
 import { generateRandomId } from 'modules/text-editor/predictable/utils';
+
 import { useTheme } from '@mui/material';
+import fetchReviewTextUpdate from './fetchReviewTextUpdate';
 
 type TTextEditorProps = {
   keywords: Array<String>
@@ -13,6 +16,10 @@ const TextEditor = (props: TTextEditorProps) => {
   const { keywords } = props;
   const editorContainer = createRef<HTMLDivElement>();
   const theme = useTheme();
+  const token = useSelector((state: any) => state.token);
+  const currentReview = useSelector((state: any) => state.currentReview);
+
+  console.log(currentReview);
 
   const predictableContainerId = useMemo(() => `${generateRandomId()}-${generateRandomId()}`, []);
   const editorId = useMemo(() => `${generateRandomId()}-${generateRandomId()}`, []);
@@ -119,11 +126,8 @@ const TextEditor = (props: TTextEditorProps) => {
         range.insertNode( document.createTextNode( text ) );
       }
     }
-    // TODO: Fix issue with Firefox pushing caret to new paragraph
     placeCaretAtEnd(editor);
   }, []);
-
-
 
   useEffect(() => {
     const rerenderPredictableText = () => {
@@ -137,8 +141,9 @@ const TextEditor = (props: TTextEditorProps) => {
       }
     };
 
-    const clickOutside = (ev: any) => {
+    const clickOutside = async (ev: any) => {
       if (editorContainer.current && !editorContainer.current.contains(ev.target)) {
+        await fetchReviewTextUpdate(currentReview.review, token, editorContainer.current.textContent);
         const predictableContainer = document.getElementById(predictableContainerId);
         if (predictableContainer) {
           predictableContainer.style.display = 'none';
@@ -155,7 +160,7 @@ const TextEditor = (props: TTextEditorProps) => {
         toolbar: false,
         autoLink: false,
         imageDragging: false,
-        disableExtraSpaces: true
+        disableExtraSpaces: true,
       }
     );
 
@@ -291,7 +296,15 @@ const TextEditor = (props: TTextEditorProps) => {
         predictableContainer.style.display = 'none';
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme, editorId, editorContainer, predictableContainerId, getLastWordCoordinates, insertTextAtCursor]);
+
+  useEffect(() => {
+    if (editorContainer.current && currentReview && currentReview.review.text) {
+      insertTextAtCursor(editorContainer.current, currentReview.review.text);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div id={editorId} ref={editorContainer} />
