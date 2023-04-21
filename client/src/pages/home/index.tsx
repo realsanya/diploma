@@ -1,7 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import API from 'api';
 import { Box, Typography, useMediaQuery } from '@mui/material';
 import Navbar from 'modules/navbar';
 import UserWidget from 'modules/user-widget';

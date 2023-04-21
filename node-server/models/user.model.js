@@ -25,6 +25,14 @@ export default (sequelize, DataTypes, Model) => {
       type: DataTypes.STRING,
       allowNull: true
     },
+    position: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    job: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
   }, {
     sequelize,
     modelName: 'user',

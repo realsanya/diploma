@@ -8,8 +8,6 @@ const Analysis = () => {
   const currentReview = useSelector((state: any) => state.currentReview);
   const dispatch = useDispatch();
 
-  console.log(currentReview);
-
   const fetchArticleAnalysis = useCallback(async () => {
     try {
       const response = await fetch(`${API.ANALYSE}/${currentReview?.review?.articleId}`, {
