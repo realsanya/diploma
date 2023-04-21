@@ -121,8 +121,23 @@ const TextEditor = (props: TTextEditorProps) => {
       if (selection && selection.getRangeAt && selection.rangeCount) {
         range = selection.getRangeAt(0);
         range.deleteContents();
+        range.insertNode(document.createTextNode(text));  
+      }
+    }
+    placeCaretAtEnd(editor);
+  }, []);
+
+  const insertText = useCallback((editor: any, text: string) => {
+    let selection,
+        range;
+
+    if (window.getSelection && editor) {
+      selection = window.getSelection();
+      if (selection && selection.getRangeAt && selection.rangeCount) {
+        range = selection.getRangeAt(0);
+        range.deleteContents();
         //@ts-ignore
-        if (range.commonAncestorContainer.className.includes('medium')) {
+        if (range.commonAncestorContainer.className?.includes('medium')) {
           range.insertNode(document.createTextNode(text));
         }
       }
@@ -144,7 +159,8 @@ const TextEditor = (props: TTextEditorProps) => {
 
     const clickOutside = async (ev: any) => {
       if (editorContainer.current && !editorContainer.current.contains(ev.target)) {
-        await fetchReviewTextUpdate(currentReview.review, token, editorContainer.current.textContent);
+        const text = editorContainer.current.textContent;
+        if (text) await fetchReviewTextUpdate(currentReview.review, token, text);
         const predictableContainer = document.getElementById(predictableContainerId);
         if (predictableContainer) {
           predictableContainer.style.display = 'none';
@@ -302,7 +318,7 @@ const TextEditor = (props: TTextEditorProps) => {
 
   useEffect(() => {
     if (editorContainer.current && currentReview && currentReview.review.text) {
-      insertTextAtCursor(editorContainer.current, currentReview.review.text);
+      insertText(editorContainer.current, currentReview.review.text);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
