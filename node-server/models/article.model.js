@@ -15,6 +15,10 @@ export default (sequelize, DataTypes, Model) => {
         type: DataTypes.TEXT('long'),
         allowNull: false
       },
+      keywords: {
+        type: DataTypes.ARRAY(DataTypes.TEXT),
+        allowNull: false,
+      }
     }, {
       sequelize,
       modelName: 'article',

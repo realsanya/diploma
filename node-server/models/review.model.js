@@ -25,8 +25,8 @@ export default (sequelize, DataTypes, Model) => {
       },
       text: {
         type: DataTypes.TEXT,
-        allowNull: false,
-      }
+        allowNull: true,
+      },
     }, {
       sequelize,
       modelName: 'review',

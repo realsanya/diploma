@@ -31,7 +31,7 @@ const Analysis = () => {
     } catch (err) {
       console.error(err); 
     }
-  }, [currentReview, dispatch])
+  }, [currentReview, dispatch]);
 
   useEffect(() => {
     fetchArticleAnalysis();
@@ -40,7 +40,7 @@ const Analysis = () => {
 
   return (
     <div>
-      Analysis {currentReview?.review?.name}
+      Модуль анализа рукописи
     </div>
   )
 

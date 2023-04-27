@@ -26,6 +26,7 @@ router.post('/article', async (req, res) => {
         ...req.body,
         storageName,
         text,
+        keywords: [],
       });
       return res.json(result);
     }, () => {

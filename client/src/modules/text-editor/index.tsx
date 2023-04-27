@@ -14,6 +14,7 @@ type TTextEditorProps = {
 
 const TextEditor = (props: TTextEditorProps) => {
   const { keywords } = props;
+
   const editorContainer = createRef<HTMLDivElement>();
   const theme = useTheme();
   const token = useSelector((state: any) => state.token);

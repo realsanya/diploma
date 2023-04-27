@@ -11,6 +11,7 @@ const API = {
   MEDIA: `${NODE_BACKEND_URL}/media`,
   FILES: `${NODE_BACKEND_URL}/file`,
   ANALYSE: `${FLASK_BACKEND_URL}/analysis`,
+  KEYWORDS: `${FLASK_BACKEND_URL}/keywords`,
   PREDICT: `${FLASK_BACKEND_URL}/chat/predict`
 }
 
