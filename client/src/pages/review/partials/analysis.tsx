@@ -1,59 +1,54 @@
-import { useEffect, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, FC } from 'react';
 
-import API from 'api';
-import { setCurrentReview } from 'state';
+import Collapse from 'components/collapse';
+import useAnalysisData from 'pages/review/hooks/useAnalysisData';
+import DetailsComponent from 'pages/review/components/details-component';
+
+import { Box, CircularProgress } from '@mui/material';
+
+
+const TITLE: TEnumString = {
+  apparatus: 'Состояние научно-справочного аппарата',
+};
+
 
 const Analysis = () => {
-  const currentReview = useSelector((state: any) => state.currentReview);
-  const dispatch = useDispatch();
-
-  const fetchArticleAnalysis = useCallback(async () => {
-    try {
-      const response = await fetch(`${API.ANALYSE}/${currentReview?.review?.articleId}`, {
-        method: 'GET',
-      });
-
-      if (!response.ok) {
-        // throw new Error(result.message);
-      } else {
-        const data = await response.json();
-
-        dispatch(
-          setCurrentReview({
-            currentReview: {
-              ...currentReview,
-              articleAnalyse: data, 
-            }
-          })
-        );
-      }
-    } catch (err) {
-      console.error(err); 
-    }
-  }, [currentReview, dispatch]);
+  const { data, isLoading, fetchData } = useAnalysisData();
 
   useEffect(() => {
-    fetchArticleAnalysis();
+    fetchData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div>
-      Модуль анализа рукописи
-    </div>
-  )
+    <Box sx={{ display: 'grid', width: '70%' }}>
+      {isLoading ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        data && Object.entries(data).map(([key, value]: [string, any], idx) => {
+          return (
+            <Collapse
+              key={key}
+              title={TITLE[key]}
+              details={
+                <>
+                  {value.map((item: { key: string, value: any }) => {
+                    const DetailsComponentByKey: FC<any> = DetailsComponent[item.key];
 
-  // return (
-  //   <Formik
-  //     initialValues={{
-  //       name: 'New peer review'
-  //     }}
-  //     onSubmit={() => {}}
-  //   >
-  //     GeneralInfo
-  //   </Formik>
-  // )
+                    return (
+                      DetailsComponentByKey && <DetailsComponentByKey title={item.key} value={item.value} />
+                    )
+                  })}
+                </>
+              }
+            />
+          )
+        })
+      )}
+    </Box>
+  );
 };
 
 export default Analysis;

@@ -1,7 +1,7 @@
 import requests
 
 def get_answer(question):
-  url = "https://api.writesonic.com/v2/business/content/chatsonic?engine=premium"
+  url = "https://api.writesonic.com/v2/business/content/chatsonic?engine=premium&language=ru"
 
   headers = {
     "accept": "application/json",

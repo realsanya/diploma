@@ -33,3 +33,5 @@ type TRouteItemConfig = {
   redirect?: string;
   isNativeLink?: boolean,
 };
+
+type TEnumString = { [n: string]: string };
