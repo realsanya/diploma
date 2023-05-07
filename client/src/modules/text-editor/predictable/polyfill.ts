@@ -1,5 +1,4 @@
-//@ts-nocheck
-//TODO: add types for props
+// @ts-nocheck
 const CustomEventPolyfill = (event, params) => {
   params = params || { bubbles: false, cancelable: false, detail: undefined };
   const evt = document.createEvent("CustomEvent");

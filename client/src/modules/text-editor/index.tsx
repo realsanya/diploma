@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { createRef, useCallback, useEffect, useMemo } from 'react';
 import MediumEditor from 'medium-editor';
 import { useSelector } from 'react-redux';
@@ -192,20 +193,17 @@ const TextEditor = (props: TTextEditorProps) => {
 
         if (predictableContainer &&
             predictableContainer.firstChild &&
-            //@ts-ignore
             predictableContainer.firstChild.firstChild?.data !== '' &&
             e.key &&
             e.key !== 'Backspace' &&
             e.key !== 'Enter' &&
-            // Only check for suggested phrases if the user is typing at the end of the document.
             isCaretAtEnd(editor)
         ) {
             const incompleteText = document.getSelection()?.anchorNode;
 
             if (incompleteText) {
               const { top, left } = getLastWordCoordinates();
-              // We create the visual effect of a placeholder element by overlaying the
-              // suggestion container at the exact position of the incomplete text.
+
               predictableContainer.style.top = `${top}px`;
               predictableContainer.style.left = `${left}px`;
               predictableContainer.style.display = 'inline';
@@ -271,8 +269,8 @@ const TextEditor = (props: TTextEditorProps) => {
           }
         },
         onTabPress: () => {
-          const incompleteText = document.getSelection()?.anchorNode,
-              range = document.createRange();
+          const incompleteText = document.getSelection()?.anchorNode;
+          const range = document.createRange();
 
           if (incompleteText) {
             range.selectNodeContents(incompleteText);
@@ -280,13 +278,10 @@ const TextEditor = (props: TTextEditorProps) => {
             let _incompleteText = incompleteText;
   
             if (incompleteText.nodeType === 3) {
-              //@ts-ignore
               _incompleteText = incompleteText.data;
             } else {
-              //@ts-ignore
               _incompleteText = incompleteText.textContent;
             }
-            //@ts-ignore
             let autocompleteText = document.querySelector('.predictable__suggestion').firstChild.data;
             autocompleteText = autocompleteText.replace(_incompleteText, '');
   

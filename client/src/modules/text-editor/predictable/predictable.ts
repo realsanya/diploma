@@ -1,6 +1,4 @@
-//TODO: code styles
 //@ts-nocheck
-
 import { predictableMethods } from './methods';
 import { Polyfill } from './polyfill';
 
