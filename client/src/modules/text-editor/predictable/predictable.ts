@@ -78,33 +78,32 @@ export default class Predictable {
       const text = this.editor.textContent;
       const currentText = (this.queryValue = this.context && this.context.getData ? this.context.getData(text) : text);
       const triggerCondition = (currentText
-        ? currentText.length > this.sensitivity && currentText.replace( / /g, '' ).length
+        ? currentText.length > this.sensitivity && currentText.replace(/ /g, '').length
         : '');
 
       const predictableEventHandler = (e, results) => {
         this.editor.dispatchEvent(
           new Polyfill.CustomEventWrapper('Predictable', {
-              bubbles: true,
-              detail: {
-                event: e,
-                input: text,
-                context: currentText,
-                matches: results ? results.matches : null,
-                results: results ? results.list : null,
-              },
-              cancelable: true,
-            }),
-          );
+            bubbles: true,
+            detail: {
+              event: e,
+              input: text,
+              context: currentText,
+              matches: results ? results.matches : null,
+              results: results ? results.list : null,
+            },
+            cancelable: true,
+          }),
+        );
       };
 
       const selected = this.onTabPress;
       const resultsList = this.predictableContainer.view;
-      const clearResults = predictableMethods.clearResults(resultsList);
 
       if (triggerCondition) {
         this.getMatchingSuggestion(this.suggestionsData)
           .then(suggestions => {
-            predictableEventHandler( e, suggestions );
+            predictableEventHandler(e, suggestions);
 
             if (selected) {
               predictableMethods.getSelection(

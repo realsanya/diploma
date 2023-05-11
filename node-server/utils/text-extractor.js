@@ -1,7 +1,7 @@
 import textract from 'textract';
 import { logger } from '../logger/index.js';
 
-let textExtractor = async (file) => {
+const textExtractor = async (file) => {
    try { 
     const type = file.mimetype;
     const buffer = (new Buffer.from(file.data, 'base64'));

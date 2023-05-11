@@ -14,6 +14,7 @@ def get_answer(question):
     "enable_memory": False,
     "input_text": question,
   }
+
   response = requests.post(url, json=payload, headers=headers)
   return response.text
 

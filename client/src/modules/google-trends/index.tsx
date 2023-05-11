@@ -7,8 +7,6 @@ const MAX_WIDGETS = 6;
 const GoogleTrends = (props) => {
   const { type, comparison, keyword, geo, time, property } = props;
 
-  console.log(keyword);
-
   const handleScriptLoad = useCallback(() => {
     if (document.getElementById(`trends-widget-${MAX_WIDGETS}`)) return;
     window.trends.embed.renderExploreWidgetTo(

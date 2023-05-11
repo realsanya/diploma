@@ -120,6 +120,7 @@ const TextEditor = (props: TTextEditorProps) => {
 
     if (window.getSelection && editor) {
       selection = window.getSelection();
+    
       if (selection && selection.getRangeAt && selection.rangeCount) {
         range = selection.getRangeAt(0);
         range.deleteContents();

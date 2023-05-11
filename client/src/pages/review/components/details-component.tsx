@@ -21,7 +21,6 @@ const DetailsComponent: {
 
   trends: ({ title, value }: { title: string, value: { words?: string[] } }) => {
     const keywords = value.words || [];
-    console.log(keywords);
     const geo = "RU";
     const time = "today 12-m";
     const property = "";
