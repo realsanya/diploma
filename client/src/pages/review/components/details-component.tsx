@@ -38,9 +38,7 @@ const DetailsComponent: {
             time={time}
             property={property}
           />
-          {keywords.map((word, idx) => {
-            console.log(word);
-            return (
+          {keywords.map((word, idx) => (
             <GoogleTrends
               key={`${word}-${idx}-q`}
               type={keywords.length > 1 ? `RELATED_QUERIES_${idx}` : 'RELATED_QUERIES'}
@@ -49,7 +47,7 @@ const DetailsComponent: {
               time={time}
               property={property}
             />
-          )})}
+          ))}
           {/* {keywords.length === 1 ? keywords.map((word, idx) => (
             <GoogleTrends
               key={`${word}-${idx}-t`}

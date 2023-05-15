@@ -4,8 +4,9 @@ import Collapse from 'components/collapse';
 import useAnalysisData from 'pages/review/hooks/useAnalysisData';
 import DetailsComponent from 'pages/review/components/details-component';
 import useKeywords from 'pages/review/hooks/useKeywords';
+import VOSviewerWidget from 'modules/vos-viewer';
 
-import { Box, CircularProgress } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 
 const TITLE: TEnumString = {
   apparatus: 'Состояние научно-справочного аппарата',
@@ -59,8 +60,14 @@ const Analysis = () => {
               />
             )})
           }
-        </Box>
 
+          {/* Интеграция VOSviewer */}
+          <Typography sx={{ marginTop: '20px' }}>
+            Визуализация сети совпадений терминов, извлеченных из заголовков и рефератов статей в Journal of Informetrics, 
+            Journal of the Association for Information Science and Technology и Scientometrics:
+          </Typography>
+          <VOSviewerWidget />
+        </Box>
       )}
     </Box>
   );
