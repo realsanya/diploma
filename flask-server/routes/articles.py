@@ -2,8 +2,8 @@ from flask import Blueprint, jsonify
 from models.Article import Article
 from app import db
 
-from utils.keywords_extractor import keywords_extractor
-from utils.extractors import urls_extractor
+from ml.keywords_extractor import keywords_extractor
+from ml.extractors import urls_extractor
 
 articles = Blueprint('articles', __name__)
 
@@ -37,16 +37,6 @@ def analyse(articleId):
     return jsonify(result)
   
   return jsonify()
-
-# @articles.route('/title/<articleId>', methods=['GET'])
-# def get_title(articleId):
-#   article = Article.query.get_or_404(articleId)
-#   data = article.serialize()
-
-#   if (data):
-#     title = urls_extractor(article.text)
-#     return jsonify(title)
-#   return jsonify()
 
 @articles.route('/keywords/<articleId>', methods=['GET'])
 def keywords(articleId):

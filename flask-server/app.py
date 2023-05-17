@@ -9,9 +9,11 @@ CORS(app, support_credentials=True)
 db = SQLAlchemy(app)
 app.app_context().push()
 
+from routes.review import review
 from routes.articles import articles
 from routes.chat import chat
 
+app.register_blueprint(review, url_prefix='/review')
 app.register_blueprint(articles, url_prefix='/')
 app.register_blueprint(chat, url_prefix='/chat')
 
@@ -24,14 +26,6 @@ app.register_blueprint(chat, url_prefix='/chat')
 # @app.route('/')
 # def hello():
 #   return 'Hey!'
-
-# @app.route('/article', methods=['POST'])
-# def create_event():
-#   body = request.get_json()
-#   article = Article(body)
-#   db.session.add(article)
-#   db.session.commit()
-#   return "Success"
 
 if __name__ == '__main__':
   app.run()

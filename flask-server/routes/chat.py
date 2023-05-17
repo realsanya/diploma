@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify
 from flask import request
 
-from utils.chatsonic import get_answer
+from ml.chatsonic import get_answer
 
 chat = Blueprint('chat', __name__)
 
