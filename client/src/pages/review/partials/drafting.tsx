@@ -17,7 +17,7 @@ const Drafting = () => {
 
   const { data: keywords, fetchData: fetchArticleAnalysis } = useKeywords();
 
-  const navigateToValidation = useCallback(() => navigate(`/review/update/${currentReview?.review?.id}/analysis`), [currentReview, navigate]);
+  const navigateToValidation = useCallback(() => navigate(`/review/update/${currentReview?.review?.id}/validation`), [currentReview, navigate]);
 
   useEffect(() => {
     fetchArticleAnalysis();

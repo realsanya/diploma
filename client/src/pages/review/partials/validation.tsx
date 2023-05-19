@@ -1,26 +1,28 @@
-import { useSelector } from 'react-redux';
-import { Formik } from 'formik';
+import { useEffect } from 'react';
+
+import useReviewValidation from '../hooks/useReviewValidation';
+
+import { Box, Typography } from '@mui/material';
 
 const Validation = () => {
 
-  const currentReview = useSelector((state: any) => state.currentReview);
+  const { data, fetchData } = useReviewValidation();
+
+  useEffect(() => {
+    fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <div>
-      Validation {currentReview?.review?.name}
-    </div>
-  )
-
-  // return (
-  //   <Formik
-  //     initialValues={{
-  //       name: 'New peer review'
-  //     }}
-  //     onSubmit={() => {}}
-  //   >
-  //     GeneralInfo
-  //   </Formik>
-  // )
+    <Box sx={{ display: 'grid', width: '70%' }}>
+      {data?.map((item) => (
+        <Box sx={{ display: 'inline-grid', gridTemplateColumns: '1fr 1fr', marginBottom: '10px' }}>
+          <Typography>{item.name}</Typography>
+          <Typography>{item.value ? 'Указано' : 'Не указано'}</Typography>
+        </Box>
+      ))}
+    </Box>
+  );
 };
 
 export default Validation;

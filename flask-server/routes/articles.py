@@ -14,12 +14,6 @@ def analyse(articleId):
   data = article.serialize()
 
   if (data):
-    # Извлечение ключевых слов
-    # keywords = []
-    # keywords[0]['key'] = 'keywords'
-    # keywords[0]['value'] = keywords_extractor(article.text)
-    # result['keywords'] = keywords
-
     # Состояние научно-справочного материала
     apparatus = []
     # -- Анализ ссылок на другие источники

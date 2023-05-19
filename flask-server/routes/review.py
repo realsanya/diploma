@@ -1,18 +1,20 @@
 from flask import Blueprint, jsonify
-from models.Article import Article
+from models.Review import Review
 from app import db
 
-from ml.sentiment_analyse import sentiment_analyse
+from ml.text_validator import text_validator
 
 review = Blueprint('review', __name__)
 
-@review.route('/analyse/<reviewId>', methods=['GET'])
-def analyse(reviewId):
+@review.route('/validation/<reviewId>', methods=['GET'])
+def validate(reviewId):
   result = {}
-  # article = Article.query.get_or_404(reviewId)
-  # data = article.serialize()
+  review = Review.query.get_or_404(reviewId)
+  data = review.serialize()
 
-  result['sentiment'] = sentiment_analyse('Маленькая девочка потерялась в торговом центре')
+  if (data):
+
+    result = text_validator(data['text'])
 
   return jsonify(result)
   
