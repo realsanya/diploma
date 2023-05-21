@@ -17,16 +17,6 @@ app.register_blueprint(review, url_prefix='/review')
 app.register_blueprint(articles, url_prefix='/')
 app.register_blueprint(chat, url_prefix='/chat')
 
-
-# def format_article(article):
-#   return {
-#     "name": article.name
-#   }
-
-# @app.route('/')
-# def hello():
-#   return 'Hey!'
-
 if __name__ == '__main__':
   app.run()
 

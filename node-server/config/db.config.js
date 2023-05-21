@@ -1,6 +1,6 @@
 import { Sequelize, Model, DataTypes } from 'sequelize';
 import dotenv from 'dotenv';
-import { ReviewModel, UserModel, ArticleModel } from '../models/index.js';
+import { ReviewModel, UserModel, ArticleModel, SettingModel } from '../models/index.js';
 import { logger } from '../logger/index.js';
 
 dotenv.config();
@@ -31,6 +31,7 @@ const connect = () => {
   db.review = ReviewModel(sequelize, DataTypes, Model);
   db.user = UserModel(sequelize, DataTypes, Model);
   db.article = ArticleModel(sequelize, DataTypes, Model);
+  db.setting = SettingModel(sequelize, DataTypes, Model);
 
   // { force: true }
   sequelize.sync().then(() => {
