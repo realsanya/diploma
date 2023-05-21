@@ -19,10 +19,16 @@ const Drafting = () => {
 
   const navigateToValidation = useCallback(() => navigate(`/review/update/${currentReview?.review?.id}/validation`), [currentReview, navigate]);
 
-  useEffect(() => {
-    fetchArticleAnalysis();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const downloadReview = useCallback(() => {
+    const fileData = JSON.stringify(currentReview.review.text.replace(/[\n\r]/g,' '));
+    const blob = new Blob([fileData], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+
+    link.download = 'review.docx';
+    link.href = url;
+    link.click();
+  }, [currentReview]);
 
   const searchAnswer = useCallback(async () => {
     try {
@@ -47,6 +53,11 @@ const Drafting = () => {
 
   const changeQuestion = useCallback((ev: any) => {
     setQuestion(ev.target.value);
+  }, []);
+
+  useEffect(() => {
+    fetchArticleAnalysis();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -75,6 +86,22 @@ const Drafting = () => {
         </Box>
         {answer && <div className="content" dangerouslySetInnerHTML={{__html: answer }}></div>}
       </Box>
+
+      <Button
+        sx={{
+          m: '2rem 2rem 2rem 0',
+          p: '1rem',
+          backgroundColor: theme.palette.background.alt,
+          color: theme.palette.primary.main,
+          borderColor: theme.palette.primary.main,
+          border: '1px solid',
+          '&:hover': {
+            color: theme.palette.primary.main,
+          }
+        }}
+        onClick={downloadReview}>
+          Скачать рецензию
+      </Button>
 
       <Button
         sx={{

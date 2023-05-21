@@ -15,6 +15,7 @@ const Validation = () => {
 
   return (
     <Box sx={{ display: 'grid', width: '70%' }}>
+      <Typography>Настройки валидатора:</Typography>
       {data?.map((item) => (
         <Box sx={{ display: 'inline-grid', gridTemplateColumns: '1fr 1fr', marginBottom: '10px' }}>
           <Typography>{item.name}</Typography>
