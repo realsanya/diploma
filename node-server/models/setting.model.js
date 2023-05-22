@@ -11,10 +11,10 @@ export default (sequelize, DataTypes, Model) => {
         type: DataTypes.BOOLEAN,
         allowNull: false
       },
-      userId: {
+      reviewId: {
         type: DataTypes.INTEGER,
         references: {
-          model: 'user',
+          model: 'review',
           key: 'id',
         },
         allowNull: false,

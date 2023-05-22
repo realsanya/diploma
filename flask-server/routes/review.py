@@ -17,4 +17,17 @@ def validate(reviewId):
     result = text_validator(data['text'])
 
   return jsonify(result)
+
+
+@review.route('/settings/<reviewId>', methods=['GET'])
+def validate(reviewId):
+  result = {}
+  review = Review.query.get_or_404(reviewId)
+  data = review.serialize()
+
+  if (data):
+
+    result = text_validator(data['text'])
+
+  return jsonify(result)
   
