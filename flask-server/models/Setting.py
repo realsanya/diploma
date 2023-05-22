@@ -27,3 +27,9 @@ class Setting(db.Model):
   def serialize(self):
     output = Serializer.serialize(self)
     return output
+  
+  def serialize__all(self):
+    output = []
+    for item in self:
+      output.add(Serializer.serialize(item))
+    return output
