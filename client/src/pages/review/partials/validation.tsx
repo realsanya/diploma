@@ -1,4 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import API from 'api';
 
 import useReviewValidation from '../hooks/useReviewValidation';
 
@@ -16,6 +19,8 @@ const DEFAULT_SETTING = {
 
 const Validation = () => {
   const theme = useTheme();
+  const { reviewId } = useParams();
+  const token = useSelector((state: any) => state.token);
   const { data, fetchData } = useReviewValidation();
 
   const [settings, setSettings] = useState<TSetting[]>(DEFAULT_SETTINGS);
@@ -27,6 +32,20 @@ const Validation = () => {
   const deleteSetting = useCallback((index: number) => {
     setSettings((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
   }, []);
+
+  const saveSettings = useCallback(async() => {
+    try {
+      await fetch(API.REVIEW_SETTINGS, {
+        method: 'PUT',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          settings: [...settings.map((item) => ({ ...item, reviewId }))]
+        })
+      });
+    } catch (err) {
+        console.error(err);
+    }
+  }, [reviewId, settings, token]);
 
   useEffect(() => {
     fetchData();
@@ -66,7 +85,7 @@ const Validation = () => {
               color: theme.palette.primary.main,
             }
           }}
-          onClick={() => {}}>
+          onClick={saveSettings}>
             Сохранить настройки
         </Button>
 

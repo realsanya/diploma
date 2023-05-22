@@ -14,6 +14,7 @@ import reviewRoutes from './routes/review.routes.js';
 import userRoutes from './routes/user.routes.js';
 import articleRoutes from './routes/article.routes.js';
 import storageRoutes from './routes/storage.routes.js';
+import settingRoutes from './routes/settings.routes.js';
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -35,6 +36,7 @@ app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 app.use('/api', userRoutes);
 app.use('/api', reviewRoutes);
 app.use('/api', articleRoutes);
+app.use('/api', settingRoutes);
 app.use('/api/auth', authRoutes);
 app.use(storageRoutes);
 

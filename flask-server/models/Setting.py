@@ -11,8 +11,7 @@ class Setting(db.Model):
   
 
   def __repr__(self):
-    return "<Setting(id='%s', name='%s', reviewId='%s', enable='%s', words='%s')>" % (
-      self.id,
+    return "<Setting(name='%s', reviewId='%s', enable='%s', words='%s')>" % (
       self.name,
       self.reviewId,
       self.enable,
@@ -20,7 +19,6 @@ class Setting(db.Model):
    )
 
   def __init__(self, body):
-    self.id = body['id']
     self.name = body['name']
     self.reviewId = body['reviewId']
     self.enable = body['enable']
