@@ -25,18 +25,17 @@ const Validation = () => {
     setSettings((prev) => [...prev, DEFAULT_SETTING]); 
   }, [setSettings]);
 
-  const handleDeleteSetting = useCallback((index: number) => {
+  const deleteSetting = useCallback((index: number) => {
     setSettings((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
   }, [setSettings]);
+
+  const validateReview = useCallback(() => {
+    fetchData();
+  }, []);
 
   const handleSave = useCallback(async () => {
     await saveSettings(settings);
   }, [saveSettings, settings]);
-
-  useEffect(() => {
-    fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <Box sx={{ display: 'grid', width: '70%' }}>
@@ -48,7 +47,7 @@ const Validation = () => {
           }
 
           return (
-            <SettingField key={setting.id} idx={index} setting={setting} changeSetting={changeSetting} deleteSetting={handleDeleteSetting} />
+            <SettingField key={setting.id} idx={index} setting={setting} changeSetting={changeSetting} deleteSetting={deleteSetting} />
           )
         })}
       </Box>
@@ -85,20 +84,25 @@ const Validation = () => {
               color: theme.palette.primary.main,
             }
           }}
-          onClick={() => {}}>
+          onClick={validateReview}>
             Валидировать текст
         </Button>
       </Box>
 
-      <Typography sx={{ fontWeight: 500 }}>Результаты работы валидатора:</Typography>
-      <Box sx={{ display: 'grid', marginTop: '20px' }}>
-        {data?.map((item) => (
-          <Box sx={{ display: 'inline-grid', gridTemplateColumns: '1fr 1fr', marginBottom: '10px' }}>
-            <Typography>{item.name}</Typography>
-            <Typography>{item.value ? 'Указано' : 'Не указано'}</Typography>
+      {data && (
+        <>
+          <Typography sx={{ fontWeight: 500 }}>Результаты работы валидатора:</Typography>
+          <Box sx={{ display: 'grid', marginTop: '20px' }}>
+            {data?.map((item) => (
+              <Box sx={{ display: 'inline-grid', gridTemplateColumns: '1fr 1fr', marginBottom: '10px' }}>
+                <Typography>{item.name}</Typography>
+                <Typography>{item.value ? 'Указано' : 'Не указано'}</Typography>
+              </Box>
+            ))}
           </Box>
-        ))}
-      </Box>
+        </>
+      )}
+
     </Box>
   );
 };
