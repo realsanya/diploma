@@ -18,7 +18,8 @@ const SettingField: FC<TSettingFieldProps> = (props) => {
 
   const handleChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setValue(ev.target.value);
-  }, []);
+    changeSetting({ ...setting, name: ev.target.value });
+  }, [changeSetting, setting]);
 
   const handleChangeEnable = useCallback(() => {
     changeSetting({ ...setting, enable: !enable });

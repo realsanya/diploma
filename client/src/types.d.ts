@@ -37,7 +37,7 @@ type TRouteItemConfig = {
 type TEnumString = { [n: string]: string };
 
 type TSetting = {
-  id?: string;
+  id?: number;
   name: string;
   enable: boolean;
   words: string[];

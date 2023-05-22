@@ -69,6 +69,20 @@ class SettingRepository {
     }
     return data;
   }
+
+  async deleteAllByReviewId(reviewId) {
+    let data = {};
+    try {
+      data = await this.db.setting.destroy({
+        where: {
+          reviewId
+        }
+      });
+    } catch(err) {
+      logger.error('Error::' + err);
+    }
+    return data;
+  }
 }
 
 export default SettingRepository;

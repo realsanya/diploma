@@ -1,15 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import API from 'api';
+import { useCallback, useEffect } from 'react';
 
+import SettingField from 'modules/setting-field';
 import useReviewValidation from '../hooks/useReviewValidation';
+import useSettings from '../hooks/useSettings';
 
 import { Box, Typography, useTheme, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import SettingField from 'modules/setting-field';
-
-import { DEFAULT_SETTINGS } from '../constants';
 
 const DEFAULT_SETTING = {
   name: '',
@@ -19,33 +15,23 @@ const DEFAULT_SETTING = {
 
 const Validation = () => {
   const theme = useTheme();
-  const { reviewId } = useParams();
-  const token = useSelector((state: any) => state.token);
-  const { data, fetchData } = useReviewValidation();
 
-  const [settings, setSettings] = useState<TSetting[]>(DEFAULT_SETTINGS);
+  const { data, fetchData } = useReviewValidation();
+  const { settings, setSettings, saveSettings } = useSettings();
+
+  // const [settings, setSettings] = useState<TSetting[]>(DEFAULT_SETTINGS);
 
   const addSetting = useCallback(() => {
     setSettings((prev) => [...prev, DEFAULT_SETTING]); 
-  }, []);
+  }, [setSettings]);
 
-  const deleteSetting = useCallback((index: number) => {
+  const handleDeleteSetting = useCallback((index: number) => {
     setSettings((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
-  }, []);
+  }, [setSettings]);
 
-  const saveSettings = useCallback(async() => {
-    try {
-      await fetch(API.REVIEW_SETTINGS, {
-        method: 'PUT',
-        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          settings: [...settings.map((item) => ({ ...item, reviewId }))]
-        })
-      });
-    } catch (err) {
-        console.error(err);
-    }
-  }, [reviewId, settings, token]);
+  const handleSave = useCallback(async () => {
+    await saveSettings(settings);
+  }, [saveSettings, settings]);
 
   useEffect(() => {
     fetchData();
@@ -62,7 +48,7 @@ const Validation = () => {
           }
 
           return (
-            <SettingField key={setting.id} idx={index} setting={setting} changeSetting={changeSetting} deleteSetting={deleteSetting} />
+            <SettingField key={setting.id} idx={index} setting={setting} changeSetting={changeSetting} deleteSetting={handleDeleteSetting} />
           )
         })}
       </Box>
@@ -85,7 +71,7 @@ const Validation = () => {
               color: theme.palette.primary.main,
             }
           }}
-          onClick={saveSettings}>
+          onClick={handleSave}>
             Сохранить настройки
         </Button>
 
