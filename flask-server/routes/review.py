@@ -20,7 +20,7 @@ def validate(reviewId):
   for item in settings:
     serialized_settings.append(item.serialize())
   
-  result = text_validator(serialized_review['text'], serialized_settings)
+  result['checkers'] = text_validator(serialized_review['text'], serialized_settings)
 
   return jsonify(result)
 

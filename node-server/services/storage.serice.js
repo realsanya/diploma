@@ -28,7 +28,7 @@ class StorageService {
 
     const buffer = download.data?.Body;
 
-    const b64 = buffer.toString('base64');
+    const b64 = buffer?.toString('base64');
       
     return b64;
   }
@@ -43,7 +43,7 @@ class StorageService {
 
     const buffer = download.data.Body;
 
-    const b64 = buffer.toString('base64');
+    const b64 = buffer?.toString('base64');
       
     return b64;
   }

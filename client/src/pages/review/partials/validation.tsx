@@ -1,6 +1,7 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useState } from 'react';
 
 import SettingField from 'modules/setting-field';
+import SignCounter from 'components/sign-counter';
 import useReviewValidation from '../hooks/useReviewValidation';
 import useSettings from '../hooks/useSettings';
 
@@ -13,13 +14,18 @@ const DEFAULT_SETTING = {
   words: [],
 }
 
+type TSignValue = {
+  min: number;
+  max: number;
+};
+
 const Validation = () => {
   const theme = useTheme();
 
   const { data, fetchData } = useReviewValidation();
   const { settings, setSettings, saveSettings } = useSettings();
 
-  // const [settings, setSettings] = useState<TSetting[]>(DEFAULT_SETTINGS);
+  const [signValue, setSignValue] = useState<TSignValue>({ min: 1800, max: 3600 });
 
   const addSetting = useCallback(() => {
     setSettings((prev) => [...prev, DEFAULT_SETTING]); 
@@ -29,6 +35,7 @@ const Validation = () => {
     setSettings((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
   }, [setSettings]);
 
+  //TODO: отправлять заданный промежуток кол-ва знаков
   const validateReview = useCallback(() => {
     fetchData();
   }, []);
@@ -41,6 +48,10 @@ const Validation = () => {
     <Box sx={{ display: 'grid', width: '70%' }}>
       <Typography sx={{ fontWeight: 500 }}>Настройки валидатора:</Typography>
       <Box sx={{ display: 'grid', gap: '20px', width: '80%', marginTop: '20px' }}>
+
+      <SignCounter value={signValue} changeValue={setSignValue} />
+
+      <Typography sx={{ marginTop: '20px' }}>Настройки проверок наличия требований к рецензии в тексте: </Typography>
         {settings.map((setting, index) => {
           const changeSetting = (newSetting: TSetting) => {
             setSettings([...settings.slice(0, index), newSetting, ...settings.slice(index + 1)]);
@@ -54,7 +65,7 @@ const Validation = () => {
 
       <Button sx={{ width: '20%', marginTop: '20px' }} onClick={addSetting}>
         <AddIcon sx={{ color: theme.palette.primary.main }} />
-        Добавить настройку
+        Добавить проверку
       </Button>
 
       <Box>
@@ -93,12 +104,15 @@ const Validation = () => {
         <>
           <Typography sx={{ fontWeight: 500 }}>Результаты работы валидатора:</Typography>
           <Box sx={{ display: 'grid', marginTop: '20px' }}>
-            {data?.map((item) => (
-              <Box sx={{ display: 'inline-grid', gridTemplateColumns: '1fr 1fr', marginBottom: '10px' }}>
-                <Typography>{item.name}</Typography>
-                <Typography>{item.value ? 'Указано' : 'Не указано'}</Typography>
-              </Box>
-            ))}
+            <Typography>Количество знаков в тексте рецензии</Typography>
+            <Box sx={{ display: 'grid', marginTop: '10px' }}>
+              {data?.checkers.map((item) => (
+                <Box sx={{ display: 'inline-grid', gridTemplateColumns: '1fr 1fr', marginBottom: '10px' }}>
+                  <Typography>{item.name}</Typography>
+                  <Typography>{item.value ? 'Указано' : 'Не указано'}</Typography>
+                </Box>
+              ))}
+            </Box>
           </Box>
         </>
       )}

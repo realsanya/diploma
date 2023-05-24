@@ -4,11 +4,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import API from 'api';
 import { setCurrentReview } from 'state';
 
+type TData = {
+  signCounter: boolean;
+  checkers: Array<{ name: string, value: boolean }>,
+}
+
 const useReviewValidation = () => {
   const currentReview = useSelector((state: any) => state.currentReview);
   const dispatch = useDispatch();
 
-  const [data, setData] = useState<Array<{ name: string, value: boolean }> | null>(null);
+  const [data, setData] = useState<TData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const fetchReviewValidation = useCallback(async () => {

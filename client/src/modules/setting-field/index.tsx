@@ -37,7 +37,7 @@ const SettingField: FC<TSettingFieldProps> = (props) => {
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <Box sx={{ display: 'flex', flexDirection: 'row', marginBottom: '15px', alignItems: 'center', justifyContent: 'space-between' }}>
         <Input 
-          placeholder='Введите название настройки'
+          placeholder='Введите название требования'
           value={value}
           onChange={handleChange}
           sx={{ width: '90%' }}
