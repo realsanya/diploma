@@ -37,8 +37,8 @@ const Validation = () => {
 
   //TODO: отправлять заданный промежуток кол-ва знаков
   const validateReview = useCallback(() => {
-    fetchData();
-  }, []);
+    fetchData({ min: signValue.min, max: signValue.max });
+  }, [signValue, fetchData]);
 
   const handleSave = useCallback(async () => {
     await saveSettings(settings);
@@ -104,8 +104,13 @@ const Validation = () => {
         <>
           <Typography sx={{ fontWeight: 500 }}>Результаты работы валидатора:</Typography>
           <Box sx={{ display: 'grid', marginTop: '20px' }}>
-            <Typography>Количество знаков в тексте рецензии</Typography>
-            <Box sx={{ display: 'grid', marginTop: '10px' }}>
+            {data.volume && (
+              <Box sx={{ display: 'inline-grid', gridTemplateColumns: '1fr 1fr', marginBottom: '10px' }}>
+                <Typography>Количество знаков в тексте рецензии</Typography>
+                <Typography>{data.volume ? 'ОК' : 'НЕ ОК'}</Typography>
+              </Box>
+            )}
+            <Box sx={{ display: 'grid' }}>
               {data?.checkers.map((item) => (
                 <Box sx={{ display: 'inline-grid', gridTemplateColumns: '1fr 1fr', marginBottom: '10px' }}>
                   <Typography>{item.name}</Typography>

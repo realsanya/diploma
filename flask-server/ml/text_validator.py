@@ -17,3 +17,12 @@ def text_validator(text, settings):
       })
 
   return result
+
+def check_char_count(text, min, max):
+  counter = 0
+
+  for i in text:
+    if(i !=" " and i !="\n"):
+      counter += 1
+
+  return counter > int(min) & counter < int(max)

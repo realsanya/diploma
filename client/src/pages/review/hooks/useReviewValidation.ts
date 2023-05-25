@@ -5,7 +5,7 @@ import API from 'api';
 import { setCurrentReview } from 'state';
 
 type TData = {
-  signCounter: boolean;
+  volume: boolean;
   checkers: Array<{ name: string, value: boolean }>,
 }
 
@@ -16,10 +16,10 @@ const useReviewValidation = () => {
   const [data, setData] = useState<TData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const fetchReviewValidation = useCallback(async () => {
+  const fetchReviewValidation = useCallback(async ({ min, max}: { min: number, max: number }) => {
     try {
       setIsLoading(true);
-      const response = await fetch(`${API.REVIEW_VALIDATION}/${currentReview?.review?.id}`, {
+      const response = await fetch(`${API.REVIEW_VALIDATION}/${currentReview?.review?.id}?min=${min}&max=${max}`, {
         method: 'GET',
       });
 
