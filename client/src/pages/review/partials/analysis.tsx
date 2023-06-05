@@ -1,4 +1,4 @@
-import { useEffect, useMemo, FC, useCallback } from 'react';
+import { useEffect, useMemo, FC, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -9,6 +9,8 @@ import useKeywords from 'pages/review/hooks/useKeywords';
 import VOSviewerWidget from 'modules/vos-viewer';
 
 import { Box, CircularProgress, Typography, Button, useTheme } from '@mui/material';
+import TemplateForm from '../components/template-form';
+import useReviewGeneration from '../hooks/useReviewGeneration';
 
 const TITLE: TEnumString = {
   apparatus: 'Состояние научно-справочного аппарата',
@@ -20,11 +22,29 @@ const Analysis = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const currentReview = useSelector((state: any) => state.currentReview);
+  const [templateForm, setTemplateForm] = useState({
+    title: '',
+    relevance: '',
+    state: '',
+    novelty: '',
+    apparatus: '',
+    structure: '',
+    methods: '',
+    illustrations: '',
+  });
 
   const { data, isLoading, fetchData } = useAnalysisData();
   const { data: keywords, isLoading: isKeywordsLoading, fetchData: fetchKeywords } = useKeywords();
+  const { fetchReviewGeneration } = useReviewGeneration();
 
-  const navigateToDrafting = useCallback(() => navigate(`/review/update/${currentReview?.review?.id}/drafting`), [currentReview, navigate]);
+  const navigateToDrafting = useCallback(async () => {
+    const isSuccess = await fetchReviewGeneration(templateForm);
+
+    if (isSuccess) {
+      navigate(`/review/update/${currentReview?.review?.id}/drafting`)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentReview, templateForm, navigate]);
 
   useEffect(() => {
     fetchData();
@@ -72,6 +92,12 @@ const Analysis = () => {
               Journal of the Association for Information Science and Technology и Scientometrics:
             </Typography>
             <VOSviewerWidget />
+
+            {/* Форма */}
+            <Typography sx={{ marginTop: '40px' }}>
+              Форма для генерации шаблона рецензии:
+            </Typography>
+            <TemplateForm template={templateForm} setTemplate={setTemplateForm} />
           </Box>
         )}
       </Box>
