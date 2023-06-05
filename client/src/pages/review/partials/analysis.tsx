@@ -24,13 +24,7 @@ const Analysis = () => {
   const currentReview = useSelector((state: any) => state.currentReview);
   const [templateForm, setTemplateForm] = useState({
     title: '',
-    relevance: '',
-    state: '',
-    novelty: '',
-    apparatus: '',
-    structure: '',
-    methods: '',
-    illustrations: '',
+     
   });
 
   const { data, isLoading, fetchData } = useAnalysisData();

@@ -9,16 +9,7 @@ import {
 } from '@mui/material';
 
 type TTemplateFormProps = {
-  template: {
-    title: string;
-    relevance: string;
-    state: string;
-    novelty: string;
-    apparatus: string;
-    structure: string;
-    methods: string;
-    illustrations: string;
-  },
+  template: any,
   setTemplate: Dispatch<SetStateAction<any>>;
 };
 

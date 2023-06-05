@@ -14,7 +14,7 @@ const API = {
   KEYWORDS: `${FLASK_BACKEND_URL}/keywords`,
   PREDICT: `${FLASK_BACKEND_URL}/chat/predict`,
   REVIEW_VALIDATION: `${FLASK_BACKEND_URL}/review/validation`,
-  REVIEW_GENERATION: `${FLASK_BACKEND_URL}/review/generate`,
+  REVIEW_GENERATION: `${FLASK_BACKEND_URL}/review/generation`,
   REVIEW_SETTINGS: `${NODE_BACKEND_URL}/api/settings`,
 }
 

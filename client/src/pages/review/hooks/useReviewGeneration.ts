@@ -32,7 +32,10 @@ const useReviewGeneration = () => {
           setCurrentReview({
             currentReview: {
               ...currentReview,
-              articleAnalyse: data, 
+              review: {
+                ...currentReview.review,
+                text: data.text, 
+              }
             }
           })
         );
